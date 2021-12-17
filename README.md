@@ -1,2 +1,4 @@
-# CompactBrushToggler
-A plugin for krita
+# Compact Brush Toggler
+A plugin for [Krita](https://krita.org).
+
+
