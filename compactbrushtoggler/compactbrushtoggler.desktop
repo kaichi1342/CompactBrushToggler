@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Service
+ServiceTypes=Krita/PythonPlugin
+X-KDE-Library=compactbrushtoggler
+X-Python-2-Compatible=false
+X-Krita-Manual=Manual.html
+Name=Compact Brush Toggler
+Comment=A docker that enables toggling the individual pressure curve of 6 brush property and adjustment to brush hfade without opening the brush editor.
