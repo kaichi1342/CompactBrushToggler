@@ -384,3 +384,4 @@ dock_widget_factory = DockWidgetFactory(DOCKER_ID,
                                         Compactbrushtoggler)
 
 instance.addDockWidgetFactory(dock_widget_factory)
+""
