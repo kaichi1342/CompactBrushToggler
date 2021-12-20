@@ -28,7 +28,7 @@ This plugin allows one access to "Use Pressure Curve" checkboxes, that toggles p
 
 
 *Brush Fade Slider*
-![Brush Fade Slider](./screenshots/ui-brushtoggler.jpeg)
+![Brush Fade Slider](./screenshots/ui-brushfade.jpeg)
 
 
 ### Functionalities
