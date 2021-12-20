@@ -24,11 +24,11 @@ This plugin allows one access to "Use Pressure Curve" checkboxes, that toggles p
 - Sca       : Scatter
 
 *Control Toggles*
-![Use Pressure Curve Toggles](./screenshots/ui.brushtoggler.jpeg)
+![Use Pressure Curve Toggles](./screenshots/ui_brushtoggler.jpeg)
 
 
 *Brush Fade Slider*
-![Brush Fade Slider](./screenshots/ui.brushtoggler.jpeg)
+![Brush Fade Slider](./screenshots/ui_brushtoggler.jpeg)
 
 
 ### Functionalities
