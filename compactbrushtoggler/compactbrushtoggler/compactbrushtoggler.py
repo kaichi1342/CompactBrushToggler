@@ -26,7 +26,7 @@
 
 from krita import DockWidget, DockWidgetFactory, DockWidgetFactoryBase
 
-import krita,time
+import krita, time
 
 from PyQt5.QtCore import (
         QItemSelectionModel,QSize,QTimer,Qt)
@@ -48,6 +48,7 @@ class Compactbrushtoggler(DockWidget):
     property = [ "Size","Opacity","Flow","Softness","Rotation","Scatter","Brush Tip" ]
     toggleState = {}
     last_brush = ""
+    cur_size = 1
 
     def __init__(self):
         super().__init__()
@@ -65,7 +66,8 @@ class Compactbrushtoggler(DockWidget):
 
         for br_prop in self.property:
             if(br_prop != "Brush Tip") : self.toggleState[br_prop] = True; 
-         
+        
+
         self.setUi()
 
     # UI LAYOUT
@@ -108,7 +110,6 @@ class Compactbrushtoggler(DockWidget):
         self.BrushFadeSlider.setTickPosition(QSlider.NoTicks)
         self.BrushFadeSlider.setTickInterval(1)
        
-
         self.toolGrid1.addWidget(self.lbl_BrushFade, 0, 0)
         self.toolGrid1.addWidget(self.BrushFadeSlider, 0, 1, 0, 5)
         self.toolGrid1.addWidget(self.BrushFade, 0, 6)
@@ -126,8 +127,8 @@ class Compactbrushtoggler(DockWidget):
         self.BrushProperty["Softness"].clicked.connect(lambda: self.toggleBrushPressure("Softness"))
         self.BrushProperty["Rotation"].clicked.connect(lambda: self.toggleBrushPressure("Rotation"))
         self.BrushProperty["Scatter"].clicked.connect(lambda: self.toggleBrushPressure("Scatter"))
-        self.BrushFade.valueChanged.connect(lambda:  self.brushFadeChange('Brush Tip'))
-        self.BrushFadeSlider.valueChanged.connect(lambda:  self.sliderChange('Brush Tip'))
+        self.BrushFade.valueChanged.connect(lambda:  self.set_brushFadeValue())
+        self.BrushFadeSlider.valueChanged.connect(lambda:  self.sliderChange())
 
         for prop in self.toggleState.keys():
             self.toggleIcon(prop, True)
@@ -147,16 +148,15 @@ class Compactbrushtoggler(DockWidget):
     # For Changing Info                                  #
     #                                                    #
     #----------------------------------------------------#
+    
     def loadBrushInfo(self): 
         cur_brush = Krita.instance().activeWindow().activeView().currentBrushPreset() 
-        cur_size  = Krita.instance().activeWindow().activeView().brushSize()
-        
-        if(cur_brush.name() != self.last_brush):  
-            self.last_brush = cur_brush.name() 
-            self.loadState()  
+        self.cur_size  = Krita.instance().activeWindow().activeView().brushSize()
 
-        Krita.instance().activeWindow().activeView().setCurrentBrushPreset(cur_brush) 
-        Krita.instance().activeWindow().activeView().setBrushSize(cur_size)
+        if(cur_brush.name() != self.last_brush):   
+            self.last_brush = cur_brush.name()  
+            self.loadState() 
+
         
     def toggleIcon(self,prop,state):
         icon = 'transform_icons_penPressure'
@@ -169,14 +169,15 @@ class Compactbrushtoggler(DockWidget):
         self.BrushProperty[prop].setIcon( Krita.instance().icon(icon) )
         self.BrushProperty[prop].setStyleSheet(def_color)
     
+
     #----------------------------------------------------#
     # Connect Functions                                  #
     #                                                    #
     #----------------------------------------------------#
 
-    def toggleBrushPressure(self, prop):   
-        cur_size = Krita.instance().activeWindow().activeView().brushSize()
- 
+    def toggleBrushPressure(self, prop):  
+        self.cur_size  = Krita.instance().activeWindow().activeView().brushSize()
+         
         if(self.toggleState[prop] == True):
             self.set_checkBoxUseCurve(prop, False)
             self.toggleState[prop] = False 
@@ -184,23 +185,11 @@ class Compactbrushtoggler(DockWidget):
         else:
             self.set_checkBoxUseCurve(prop, True)
             self.toggleState[prop] = True 
-            self.toggleIcon(prop,True)
+            self.toggleIcon(prop,True) 
+             
 
-        Krita.instance().activeWindow().activeView().setBrushSize(cur_size)
-
-    def brushFadeChange(self, prop):  
-        cur_size = Krita.instance().activeWindow().activeView().brushSize()
-
-        self.set_brushFadeValue(prop) 
-        
-        Krita.instance().activeWindow().activeView().setBrushSize(cur_size)
-
-    def sliderChange(self, prop):  
-        cur_size = Krita.instance().activeWindow().activeView().brushSize()
-        
-        self.BrushFade.setValue(self.BrushFadeSlider.value()/100) 
-
-        Krita.instance().activeWindow().activeView().setBrushSize(cur_size)
+    def sliderChange(self):   
+        self.BrushFade.setValue(self.BrushFadeSlider.value()/100)  
 
      
     #----------------------------------------------------#
@@ -234,7 +223,7 @@ class Compactbrushtoggler(DockWidget):
         editor = self.get_brush_editor()
         option_widget_container = editor.findChild(QWidget, 'frmOptionWidgetContainer')
         current_view = None
-         
+        selectedRow  = None 
         for view in option_widget_container.findChildren(QListView):
             if view.metaObject().className() == 'KisCategorizedListView':
                 if view.isVisibleTo(option_widget_container):
@@ -247,9 +236,10 @@ class Compactbrushtoggler(DockWidget):
             model = current_view.model()
             target_index = None
             for row in range(model.rowCount()):
-                index = model.index(row)   
+                index = model.index(row,0)   
                 if index.data() == br_property: 
                     target_index = index
+                    selectedRow = row
                     break
                     
             if target_index is not None: 
@@ -263,6 +253,7 @@ class Compactbrushtoggler(DockWidget):
         container_info = dict()
         container_info["model_index"]  = target_index
         container_info["current_view"] = current_view
+        container_info["row_count"]    = selectedRow
         container_info["option_widget_container"] = option_widget_container
         container_info["current_settings_widget"] = current_settings_widget
 
@@ -279,39 +270,51 @@ class Compactbrushtoggler(DockWidget):
         current_view = container_info["current_view"] 
         option_widget_container = container_info["option_widget_container"] 
         current_settings_widget = container_info["current_settings_widget"]  
-         
+
         if current_view:  
             model = current_view.model()
             for check_box in current_settings_widget.findChildren(QCheckBox, 'checkBoxUseCurve'):
                 if check_box.isVisibleTo(option_widget_container):
                     if  (br_property != "Opacity" and br_property != "Flow"):
                         if new_state:
-                            model.setData(m_index, Qt.Checked, Qt.CheckStateRole)
+                           model.setData(m_index, Qt.Checked, Qt.CheckStateRole)
                         else: 
                             model.setData(m_index, Qt.Unchecked , Qt.CheckStateRole)
+                #ask something for this
+                    check_box.setChecked(new_state)  
+                    break  
+        
+        self.set_brushSize()            
 
-                    check_box.setChecked(new_state)
-                    break 
-  
     #----------------------------------------------------#
     # Set the Value of Brush HFade in the Brush          #
     # Property Editor                                    #
     #----------------------------------------------------#
-    def set_brushFadeValue(self, br_property):
-        container_info = self.selectBrushContainer(br_property)
+    def set_brushFadeValue(self):
+        container_info = self.selectBrushContainer("Brush Tip")
         current_view = container_info["current_view"] 
         option_widget_container = container_info["option_widget_container"] 
         current_settings_widget = container_info["current_settings_widget"]  
         
-        if current_view:  
-            if(br_property == "Brush Tip"):
-                for spin_box in current_settings_widget.findChildren(QDoubleSpinBox, 'inputHFade'):
-                    if spin_box.isVisibleTo(option_widget_container):  
-                        spin_box.setValue(self.BrushFade.value()) 
-                        self.BrushFade.setEnabled(True) 
-                        break 
+        if current_view:   
+            for spin_box in current_settings_widget.findChildren(QDoubleSpinBox, 'inputHFade'):
+                if spin_box.isVisibleTo(option_widget_container):  
+                    spin_box.setValue(self.BrushFade.value()) 
+                    self.BrushFade.setEnabled(True) 
+                    break 
+
+    def set_brushSize(self):
+        container_info = self.selectBrushContainer("Brush Tip")
+        current_view = container_info["current_view"] 
+        option_widget_container = container_info["option_widget_container"] 
+        current_settings_widget = container_info["current_settings_widget"]  
+        
+        if current_view:   
+            for spin_box in current_settings_widget.findChildren(QDoubleSpinBox, 'inputRadius'):
+                if spin_box.isVisibleTo(option_widget_container):  
+                    spin_box.setValue(self.cur_size)  
+                    break 
     
-  
     #----------------------------------------------------#
     # Load the current state of brush property toggles   #
     #                                                    #
@@ -326,6 +329,7 @@ class Compactbrushtoggler(DockWidget):
                 if view.isVisibleTo(option_widget_container):
                     current_view = view
                     break
+
         for br_property in self.property: 
             if current_view:
                 current_settings_widget = current_view.parent()
@@ -384,4 +388,3 @@ dock_widget_factory = DockWidgetFactory(DOCKER_ID,
                                         Compactbrushtoggler)
 
 instance.addDockWidgetFactory(dock_widget_factory)
-""
