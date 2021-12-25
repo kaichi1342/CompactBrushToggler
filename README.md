@@ -58,7 +58,7 @@ This plugin main function  are;
 
 If the global pressure setting is off, then this plugin pressure setting will also be off. 
 
-*insert youtube link*
+[Video Compact Brush Toggler in Action](https://drive.google.com/file/d/1pQa8cNno-4sxo2xajcnBNjxIr7wJ17fM/view?usp=sharing)
 
 ### Notes
 
@@ -75,6 +75,7 @@ It probably is not effecient and mayhaps be a slow approach but for now its the 
 - Bind a pressure toggle to a keyboard shortcut
 - Add / remove property to toggle
 - A way to change to a skinnier interface or maybe vertical stack layout. 
+- Re-write this plugin using better method. 
 
 - Im open to suggestion but i dont know if i can implement them with my
 current skillset.
@@ -85,7 +86,7 @@ current skillset.
 If the pressure setting is editted by the Brush Editor this current state wont reflect on the docker. 
 You would need to switch to a different brush and back for it to properly reflect. 
 
-2. I'm not really sure but there a bit of hickup during brush selection
+2. Sometimes eraser mode is retained upon toggling if you have eraser mode toggled in the brush before
 
 3. It wont follow Krita theme if you have different one. [it defaults to blue]
 
@@ -113,7 +114,7 @@ if not enable it by going to Settings -> Configure Krita -> **Python Plugin Mana
 
 ### Release Log
 
-2021-12-22  : Version 0.1.2b
+2021-12-22  : Version 0.1.1b
 - First Released Version 
 - Added ability to toggle listview checkbox of the brush property
 - Added rotation and scatter toggles
@@ -121,7 +122,7 @@ if not enable it by going to Settings -> Configure Krita -> **Python Plugin Mana
 - Re-organized UI 
 - Removed brush name label
 
-2021-12-16  : Version 0.1.1 
+2021-12-16  : Version 0.1.0 
 - First Implemented Version
 
 ### Thanks to:
