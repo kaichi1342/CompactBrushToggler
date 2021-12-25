@@ -76,9 +76,7 @@ It probably is not effecient and mayhaps be a slow approach but for now its the 
 - Add / remove property to toggle
 - A way to change to a skinnier interface or maybe vertical stack layout. 
 - Re-write this plugin using better method. 
-
-- Im open to suggestion but i dont know if i can implement them with my
-current skillset.
+- Will update this if I feel like I need to add something. 
 
 ### Bugs and Known Issues
 
