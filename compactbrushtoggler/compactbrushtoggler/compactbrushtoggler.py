@@ -205,15 +205,15 @@ class Compactbrushtoggler(DockWidget):
     def sliderChange(self):    
         self.BrushFade.setValue(self.BrushFadeSlider.value()/100)  
  
-    def changeFadeValue(self): 
-        self.cur_size  = Krita.instance().activeWindow().activeView().brushSize()    
-         
-        self.set_brushSize()
-        
     def spinnerChangedValue(self): 
         self.BrushFadeSlider.setValue(self.BrushFade.value()*100)
         self.changeFadeValue()
-         
+    
+    def changeFadeValue(self): 
+        self.cur_size  = Krita.instance().activeWindow().activeView().brushSize()    
+        self.set_brushFadeValue()
+        self.set_brushSize()
+
     #----------------------------------------------------#
     # For Traversing nodes to get to Brush Editor Docker #
     #                                                    #
@@ -322,7 +322,7 @@ class Compactbrushtoggler(DockWidget):
             for spin_box in current_settings_widget.findChildren(QDoubleSpinBox, 'inputHFade'):
                 if spin_box.isVisibleTo(option_widget_container):  
                     spin_box.setValue(self.BrushFade.value()) 
-                    #self.BrushFade.setEnabled(True) 
+                    self.BrushFade.setEnabled(True) 
                     break 
 
     
@@ -404,6 +404,8 @@ class Compactbrushtoggler(DockWidget):
                             self.BrushFadeSlider.setEnabled(False)
 
                 
+
+
 instance = Krita.instance()
 dock_widget_factory = DockWidgetFactory(DOCKER_ID,
                                         DockWidgetFactoryBase.DockRight,

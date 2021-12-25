@@ -58,7 +58,7 @@ This plugin main function  are;
 
 If the global pressure setting is off, then this plugin pressure setting will also be off. 
 
-[Video Compact Brush Toggler in Action](https://drive.google.com/file/d/1ULotcB7Jz1tkIwEnhwhxhSmIMoAT_pME/view?usp=sharing)
+[Video Compact Brush Toggler in Action](https://drive.google.com/file/d/1pQa8cNno-4sxo2xajcnBNjxIr7wJ17fM/view?usp=sharing)
 
 ### Notes
 
