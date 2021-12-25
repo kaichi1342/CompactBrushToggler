@@ -80,13 +80,13 @@ It probably is not effecient and mayhaps be a slow approach but for now its the 
 - Im open to suggestion but i dont know if i can implement them with my
 current skillset.
 
-### Bugs and Knwon Issues
+### Bugs and Known Issues
 
 1. Currently the pressure setting initial states loads only upon selection of a brush. 
 If the pressure setting is editted by the Brush Editor this current state wont reflect on the docker. 
 You would need to switch to a different brush and back for it to properly reflect. 
 
-2. Sometimes eraser mode is retained upon toggling if you have eraser mode toggled in the brush before
+2. Sometimes eraser mode is retained upon toggling if you have eraser mode toggled on and off in before the toggle.
 
 3. It wont follow Krita theme if you have different one. [it defaults to blue]
 
