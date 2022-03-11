@@ -35,6 +35,8 @@ The plugin loads the state of the pressure settings once a brush is selected;
 
 ![Use Pressure Curve Toggles](./screenshots/ui-brushtoggler.jpeg)
 
+*Overlay Mode for Smudge Brush*
+![Use Pressure Curve Toggles](./screenshots/ui-brushtoggler2.jpeg)
 
 *Brush Fade Slider*
 
