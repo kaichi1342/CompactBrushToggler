@@ -93,7 +93,7 @@ You would need to switch to a different brush and back for it to properly reflec
 ## Downloads - Install - Execute 
 
 ### Download
-- **[ZIP](https://github.com/kaichi1342/CompactBrushToggler/archive/refs/heads/v.0.1.1b.zip)**
+- **[ZIP](https://github.com/kaichi1342/CompactBrushToggler/archive/refs/heads/v.0.1.2.zip)**
 - **[Source](https://github.com/kaichi1342/CompactBrushToggler)**
 
 ### Install
