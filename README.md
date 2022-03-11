@@ -35,6 +35,8 @@ The plugin loads the state of the pressure settings once a brush is selected;
 
 ![Use Pressure Curve Toggles](./screenshots/ui-brushtoggler.jpeg)
 
+*Overlay Mode for Smudge Brush*
+![Overlay Mode](./screenshots/ui-brushtoggler2.jpeg)
 
 *Brush Fade Slider*
 
@@ -111,6 +113,12 @@ if not enable it by going to Settings -> Configure Krita -> **Python Plugin Mana
 - Krita 5 beta 5
 
 ### Release Log
+
+2022-03-11  : Version 0.1.2
+- Fix Opacity / Flow Load Status
+- Added Overlay Mode for Smudge Brush
+- Added disabling of none existing properties
+- Re-organize UI 
 
 2021-12-22  : Version 0.1.1b
 - First Released Version 
