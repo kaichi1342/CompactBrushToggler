@@ -67,8 +67,7 @@ class Compactbrushtoggler(DockWidget):
 
     def __init__(self):
         super().__init__()
-        #self.setWindowTitle("Compact Brush Toggler")
-        self.setWindowTitle("Brush Toggles")
+        self.setWindowTitle("Compact Brush Toggler") 
 
         self.baseWidget = QWidget()
          
