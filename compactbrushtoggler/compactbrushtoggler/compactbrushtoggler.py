@@ -24,6 +24,7 @@
 # -----------------------------------------------------------------------------
  
 
+from faulthandler import disable
 from krita import DockWidget, DockWidgetFactory, DockWidgetFactoryBase
 
 import krita, time
@@ -58,19 +59,19 @@ class CBTDoubleSpinBox(QDoubleSpinBox):
 
 class Compactbrushtoggler(DockWidget):
     
-    property = [ "Size","Opacity","Flow","Softness","Rotation","Scatter","Brush Tip" ]
+    property = [ "Size","Opacity","Flow","Softness","Rotation","Scatter","Overlay Mode","Brush Tip" ]
+    property_fn = { "Size" : 0,"Opacity" : 0,"Flow": 0,"Softness": 0,"Rotation": 0,"Scatter": 0,"Overlay Mode": 0,"Brush Tip": 0 }
     toggleState = {}
     last_brush = ""
     cur_size = 1
 
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Compact Brush Toggler")
+        #self.setWindowTitle("Compact Brush Toggler")
+        self.setWindowTitle("Brush Toggles")
 
         self.baseWidget = QWidget()
-        self.baseWidget.setMinimumSize(QSize(120,80))
-        self.baseWidget.setMaximumSize(QSize(280,90))
-
+         
         self.vbox = QVBoxLayout()
         self.vbox.setContentsMargins(2, 2, 2, 2)
 
@@ -80,11 +81,14 @@ class Compactbrushtoggler(DockWidget):
         for br_prop in self.property:
             if(br_prop != "Brush Tip") : self.toggleState[br_prop] = True; 
     
-        self.setUi()
+        self.setUI_H()
 
     # UI LAYOUT
-    def setUi(self):
- 
+    def setUI_H(self):
+
+        self.baseWidget.setMinimumSize(QSize(60,100))
+        self.baseWidget.setMaximumSize(QSize(280,340))
+
         self.timer=QTimer() 
 
         self.hRow1 = QWidget()
@@ -104,17 +108,20 @@ class Compactbrushtoggler(DockWidget):
         self.lbl_BrushFade       = QLabel(self)
         self.BrushFadeSlider     = QSlider(Qt.Horizontal)
         self.BrushFade           = CBTDoubleSpinBox()
+
         self.BrushProperty       = {
                 
-                "Size"      : QPushButton(" Sze"),
-                "Opacity"   : QPushButton(" Opc"),
-                "Flow"      : QPushButton(" Flw"),
-                "Softness"  : QPushButton(" Sft"), 
-                "Rotation"  : QPushButton(" Rot"),
-                "Scatter"   : QPushButton(" Sct") 
+            "Size"      : QPushButton("Sze "),
+            "Opacity"   : QPushButton("Opc "),
+            "Flow"      : QPushButton("Flw "),
+            "Softness"  : QPushButton("Sft "), 
+            "Rotation"  : QPushButton("Rot "),
+            "Scatter"   : QPushButton("Sct "), 
+            "Overlay Mode"   : QPushButton("Overlay Mode ") 
 
         }
-        self.lbl_BrushFade.setText("Br.Fade")
+
+        self.lbl_BrushFade.setText("Fade")
         self.BrushFade.setRange(0, 1.0)
         self.BrushFade.setSingleStep(.01) 
 
@@ -126,12 +133,13 @@ class Compactbrushtoggler(DockWidget):
         self.toolGrid1.addWidget(self.BrushFadeSlider, 0, 1, 0, 5)
         self.toolGrid1.addWidget(self.BrushFade, 0, 6)
  
-        self.toolGrid2.addWidget(self.BrushProperty["Size"], 0, 1)
-        self.toolGrid2.addWidget(self.BrushProperty["Opacity"], 0, 2) 
-        self.toolGrid2.addWidget(self.BrushProperty["Flow"], 0, 3)
+        self.toolGrid2.addWidget(self.BrushProperty["Size"], 0, 0)
+        self.toolGrid2.addWidget(self.BrushProperty["Opacity"], 0, 1) 
+        self.toolGrid2.addWidget(self.BrushProperty["Flow"], 1, 0)
         self.toolGrid2.addWidget(self.BrushProperty["Softness"], 1, 1)
-        self.toolGrid2.addWidget(self.BrushProperty["Rotation"], 1, 2) 
-        self.toolGrid2.addWidget(self.BrushProperty["Scatter"], 1, 3)
+        self.toolGrid2.addWidget(self.BrushProperty["Rotation"], 2, 0) 
+        self.toolGrid2.addWidget(self.BrushProperty["Scatter"], 2, 1)
+        self.toolGrid2.addWidget(self.BrushProperty["Overlay Mode"], 3,0,3,2)
 
         self.BrushProperty["Size"].clicked.connect(lambda: self.toggleBrushPressure("Size"))
         self.BrushProperty["Opacity"].clicked.connect(lambda: self.toggleBrushPressure("Opacity"))
@@ -139,6 +147,7 @@ class Compactbrushtoggler(DockWidget):
         self.BrushProperty["Softness"].clicked.connect(lambda: self.toggleBrushPressure("Softness"))
         self.BrushProperty["Rotation"].clicked.connect(lambda: self.toggleBrushPressure("Rotation"))
         self.BrushProperty["Scatter"].clicked.connect(lambda: self.toggleBrushPressure("Scatter"))
+        self.BrushProperty["Overlay Mode"].clicked.connect(lambda: self.toggleBrushPressure("Overlay Mode"))
          
         self.BrushFadeSlider.valueChanged.connect(lambda:  self.sliderChange()) 
         self.BrushFadeSlider.sliderReleased.connect(lambda:  self.changeFadeValue()) 
@@ -149,6 +158,8 @@ class Compactbrushtoggler(DockWidget):
            
         self.timer.timeout.connect(self.loadBrushInfo)
          
+
+    
 
     def canvasChanged(self, canvas):
         if canvas:       
@@ -296,12 +307,19 @@ class Compactbrushtoggler(DockWidget):
         if current_view:  
             model = current_view.model()
             for check_box in current_settings_widget.findChildren(QCheckBox, 'checkBoxUseCurve'):
+                if  (br_property == "Overlay Mode"):
+                    if new_state:
+                        model.setData(m_index, Qt.Checked, Qt.CheckStateRole)
+                    else: 
+                        model.setData(m_index, Qt.Unchecked , Qt.CheckStateRole)           
+
                 if check_box.isVisibleTo(option_widget_container):
                     if  (br_property != "Opacity" and br_property != "Flow"):
                         if new_state:
                            model.setData(m_index, Qt.Checked, Qt.CheckStateRole)
                         else: 
                            model.setData(m_index, Qt.Unchecked , Qt.CheckStateRole)
+   
                 #ask something for this
                     check_box.setChecked(new_state)  
                     break  
@@ -343,6 +361,25 @@ class Compactbrushtoggler(DockWidget):
     # Load the current state of brush property toggles   #
     #                                                    #
     #----------------------------------------------------#
+    def checkState(self, br_property, check1 , check2):
+        if(check1 and check2): 
+            self.toggleState[br_property] = True
+            self.toggleIcon(br_property,True)
+        else:
+            self.toggleState[br_property] = False
+            self.toggleIcon(br_property,False)
+
+    def isPropertyExist(self,br_property):
+        for br_property in self.property: 
+            if(br_property != "Brush Tip"): 
+                if(self.property_fn[br_property] == 1):
+                    self.BrushProperty[br_property].setEnabled(True)
+                else: 
+                    self.BrushProperty[br_property].setEnabled(False)
+                    self.toggleState[br_property] = False
+                    self.toggleIcon(br_property,False) 
+            self.property_fn[br_property] = 0
+
     def loadState(self): 
         editor = self.get_brush_editor()
         option_widget_container = editor.findChild(QWidget, 'frmOptionWidgetContainer')
@@ -354,6 +391,7 @@ class Compactbrushtoggler(DockWidget):
                     current_view = view
                     break
 
+        #disable option here
         for br_property in self.property: 
             if current_view:
                 current_settings_widget = current_view.parent()
@@ -372,23 +410,30 @@ class Compactbrushtoggler(DockWidget):
                     s_model.setCurrentIndex(target_index, QItemSelectionModel.SelectCurrent)
                     current_view.setCurrentIndex(target_index)
                     current_view.activated.emit(target_index)
-
+                   
                     if(br_property != "Brush Tip"): 
                         m_check = False
-                        if (br_property != "Opacity" and br_property != "Flow") and target_index.flags()&Qt.ItemIsUserCheckable:
+                         
+                        if (br_property != "Opacity" and br_property != "Flow" ) and target_index.flags() & Qt.ItemIsUserCheckable:
+                            self.property_fn[br_property] = 1
                             if target_index.data(Qt.CheckStateRole):
                                 m_check = True
                             else:
                                 m_check = False
-                        for check_box in current_settings_widget.findChildren(QCheckBox, 'checkBoxUseCurve'): 
-                            if check_box.isVisibleTo(option_widget_container):    
-                                if(check_box.isChecked() and m_check): 
-                                    self.toggleState[br_property] = True
-                                    self.toggleIcon(br_property,True)
-                                else:
-                                    self.toggleState[br_property] = False
-                                    self.toggleIcon(br_property,False)
+
+                        if(br_property == "Overlay Mode"):
+                            self.property_fn[br_property] = 1
+                            self.checkState(br_property, target_index.data(Qt.CheckStateRole), True)
+
+                        for check_box in current_settings_widget.findChildren(QCheckBox, 'checkBoxUseCurve'):  
+                            self.property_fn[br_property] = 1
+                            if br_property != "Opacity" and br_property != "Flow"  and check_box.isVisibleTo(option_widget_container) :    
+                                self.checkState(br_property, check_box.isChecked(), m_check)
                                 break
+                            else: 
+                                if(check_box.isVisibleTo(option_widget_container)): 
+                                    self.checkState(br_property, check_box.isChecked(), True) 
+                                        
                     else:  
                         ft = 0
                         for spin_box in current_settings_widget.findChildren(QDoubleSpinBox, 'inputHFade'): 
@@ -403,7 +448,8 @@ class Compactbrushtoggler(DockWidget):
                             self.BrushFade.setEnabled(False)
                             self.BrushFadeSlider.setEnabled(False)
 
-                
+        self.isPropertyExist(br_property)
+
 
 
 instance = Krita.instance()
