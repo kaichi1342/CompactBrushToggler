@@ -25,6 +25,7 @@
  
 
 from faulthandler import disable
+from webbrowser import get
 from krita import DockWidget, DockWidgetFactory, DockWidgetFactoryBase
 
 import krita, time
@@ -35,8 +36,9 @@ from PyQt5.QtCore import (
 from PyQt5.QtWidgets import (
         QApplication, QCheckBox, QListView,
         QFrame,QWidget, QLabel, QSlider,
-        QVBoxLayout,  QGridLayout,
-        QPushButton,QDoubleSpinBox,
+        QVBoxLayout,  QGridLayout, QTextEdit,
+        QPushButton,QDoubleSpinBox,QMainWindow,
+        QComboBox
          )
 
 DOCKER_NAME = 'CompactBrushToggler'
@@ -59,11 +61,17 @@ class CBTDoubleSpinBox(QDoubleSpinBox):
 
 class Compactbrushtoggler(DockWidget):
     
-    property = [ "Size","Opacity","Flow","Softness","Rotation","Scatter","Overlay Mode","Brush Tip" ]
-    property_fn = { "Size" : 0,"Opacity" : 0,"Flow": 0,"Softness": 0,"Rotation": 0,"Scatter": 0,"Overlay Mode": 0,"Brush Tip": 0 }
+    property = [ "Size","Opacity","Flow","Softness","Rotation","Scatter","Overlay Mode","Color Rate","Brush Tip" ] 
+    property_fn = { "Size" : 0,"Opacity" : 0,"Flow": 0,"Softness": 0,"Rotation": 0,"Scatter": 0,"Overlay Mode": 0,"Color Rate": 0,"Brush Tip": 0 }
+  
     toggleState = {}
+
+    br_values = {"Size:" : None, "Opacity:" : None, "Color Rate:" : None, "Smudge Length:" : None, "Angle:" : None, "Smudge mode:" : "Dulling"}
+
+    for_set = {}
     last_brush = ""
     cur_size = 1
+    count = 0
 
     def __init__(self):
         super().__init__()
@@ -116,7 +124,8 @@ class Compactbrushtoggler(DockWidget):
             "Softness"  : QPushButton("Sft "), 
             "Rotation"  : QPushButton("Rot "),
             "Scatter"   : QPushButton("Sct "), 
-            "Overlay Mode"   : QPushButton("Overlay Mode ") 
+            "Overlay Mode" : QPushButton("OvlMode "), 
+            "Color Rate"   : QPushButton("ColRate ") 
 
         }
 
@@ -138,7 +147,8 @@ class Compactbrushtoggler(DockWidget):
         self.toolGrid2.addWidget(self.BrushProperty["Softness"], 1, 1)
         self.toolGrid2.addWidget(self.BrushProperty["Rotation"], 2, 0) 
         self.toolGrid2.addWidget(self.BrushProperty["Scatter"], 2, 1)
-        self.toolGrid2.addWidget(self.BrushProperty["Overlay Mode"], 3,0,3,2)
+        self.toolGrid2.addWidget(self.BrushProperty["Overlay Mode"], 3,0)
+        self.toolGrid2.addWidget(self.BrushProperty["Color Rate"], 3,1)
 
         self.BrushProperty["Size"].clicked.connect(lambda: self.toggleBrushPressure("Size"))
         self.BrushProperty["Opacity"].clicked.connect(lambda: self.toggleBrushPressure("Opacity"))
@@ -147,6 +157,7 @@ class Compactbrushtoggler(DockWidget):
         self.BrushProperty["Rotation"].clicked.connect(lambda: self.toggleBrushPressure("Rotation"))
         self.BrushProperty["Scatter"].clicked.connect(lambda: self.toggleBrushPressure("Scatter"))
         self.BrushProperty["Overlay Mode"].clicked.connect(lambda: self.toggleBrushPressure("Overlay Mode"))
+        self.BrushProperty["Color Rate"].clicked.connect(lambda: self.toggleBrushPressure("Color Rate"))
          
         self.BrushFadeSlider.valueChanged.connect(lambda:  self.sliderChange()) 
         self.BrushFadeSlider.sliderReleased.connect(lambda:  self.changeFadeValue()) 
@@ -156,14 +167,16 @@ class Compactbrushtoggler(DockWidget):
             self.toggleIcon(prop, True)
            
         self.timer.timeout.connect(self.loadBrushInfo)
+        
          
+
 
     
 
     def canvasChanged(self, canvas):
         if canvas:       
             if canvas.view():
-                self.timer.start(400)
+                self.timer.start(200)
         else:
             self.timer.stop() 
 
@@ -176,11 +189,17 @@ class Compactbrushtoggler(DockWidget):
     def loadBrushInfo(self): 
         cur_brush = Krita.instance().activeWindow().activeView().currentBrushPreset() 
         self.cur_size  = Krita.instance().activeWindow().activeView().brushSize()
+ 
+     
+        self.get_palette_values()
+  
 
         if(cur_brush.name() != self.last_brush):   
             self.last_brush = cur_brush.name()  
-            self.loadState() 
-
+            self.loadState()
+        
+        
+ 
         
     def toggleIcon(self,prop,state):
         icon = 'transform_icons_penPressure'
@@ -198,10 +217,9 @@ class Compactbrushtoggler(DockWidget):
     # Connect Functions                                  #
     #                                                    #
     #----------------------------------------------------#
-
     def toggleBrushPressure(self, prop):  
         self.cur_size  = Krita.instance().activeWindow().activeView().brushSize()
-         
+           
         if(self.toggleState[prop] == True):
             self.set_checkBoxUseCurve(prop, False)
             self.toggleState[prop] = False 
@@ -210,7 +228,11 @@ class Compactbrushtoggler(DockWidget):
             self.set_checkBoxUseCurve(prop, True)
             self.toggleState[prop] = True 
             self.toggleIcon(prop,True) 
-             
+
+         
+        self.set_PaletteValue(self.br_values)
+            
+        
 
     def sliderChange(self):    
         self.BrushFade.setValue(self.BrushFadeSlider.value()/100)  
@@ -224,6 +246,7 @@ class Compactbrushtoggler(DockWidget):
         self.set_brushFadeValue()
         self.set_brushSize()
 
+    
     #----------------------------------------------------#
     # For Traversing nodes to get to Brush Editor Docker #
     #                                                    #
@@ -356,6 +379,113 @@ class Compactbrushtoggler(DockWidget):
                     spin_box.setValue(self.cur_size)  
                     break 
     
+    #----------------------------------------------------#
+    # Check Palette Value                                #
+    #                                                    #
+    #----------------------------------------------------#
+
+    def get_palette(self):
+        for window in QApplication.topLevelWidgets():
+            if isinstance(window, QMainWindow) and window.metaObject().className() == 'KisMainWindow':
+                for widget, _ in self.walk_widgets(window):
+                    real_cls_name = widget.metaObject().className()
+                    #obj_name = widget.objectName() 
+                    if real_cls_name == 'KisPopupPalette':             
+                        return widget
+
+
+
+    def get_palette_values(self):    
+        palette = self.get_palette()  
+        if(palette.isVisible()): 
+            for view in palette.findChildren(QWidget): 
+                if(view.metaObject().className() == 'KisBrushHud'): 
+                    for spin in view.findChildren(QDoubleSpinBox):
+                        key = spin.prefix().rstrip()
+                        self.br_values[key] = spin.value() 
+                    for combo in view.findChildren(QComboBox): 
+                        self.br_values["Smudge mode:"] = combo.currentText() 
+
+                if(len(self.br_values) == 4):
+                    break
+ 
+        return self.br_values             
+    
+
+
+    def set_PaletteValue(self,values):
+        editor = self.get_brush_editor()
+        option_widget_container = editor.findChild(QWidget, 'frmOptionWidgetContainer')
+        current_view = None  
+        
+        for view in option_widget_container.findChildren(QListView):
+            if view.metaObject().className() == 'KisCategorizedListView':
+                if view.isVisibleTo(option_widget_container):
+                    current_view = view
+                    break
+
+        props = ["Opacity", "Color Rate", "Smudge Length", "Brush Tip"]
+ 
+        #disable option here 
+        if current_view :
+            current_settings_widget = current_view.parent()
+            s_model = current_view.selectionModel()
+            model = current_view.model()
+            target_index = None
+            for br_property in props:
+                for row in range(model.rowCount()):
+                    index = model.index(row)   
+                    if index.data() == br_property: 
+                        target_index = index
+                        break
+                        
+                if target_index is not None: 
+                    s_model.clear()
+                    s_model.select(target_index, QItemSelectionModel.SelectCurrent)
+                    s_model.setCurrentIndex(target_index, QItemSelectionModel.SelectCurrent)
+                    current_view.setCurrentIndex(target_index)
+                    current_view.activated.emit(target_index) 
+                    
+                    if(target_index.data() in props ): 
+                        for combo in current_settings_widget.findChildren(QComboBox):   
+                            if(combo.isVisibleTo(option_widget_container) and combo.metaObject().className() == "QComboBox"): 
+                                if(combo.currentText() == "Dulling" or combo.currentText() == "Smearing"): 
+                                    if(values["Smudge mode:"] != None):
+                                        index = combo.findText(values["Smudge mode:"], Qt.MatchFixedString)
+                                        if index >= 0:
+                                                combo.setCurrentIndex(index) 
+                                            
+                                        
+                        for spin_box in current_settings_widget.findChildren(QDoubleSpinBox):    
+                            if(spin_box.isVisibleTo(option_widget_container) and spin_box.metaObject().className() == "KisAngleSelectorSpinBox"): 
+                                if(br_property == "Brush Tip"):
+                                    if(values["Angle:"] != None):
+                                        spin_box.setValue(values["Angle:"])
+                                        break
+                                        
+                        for spin_box in current_settings_widget.findChildren(QDoubleSpinBox, 'strengthSlider'):    
+                            if(spin_box.isVisibleTo(option_widget_container)):   
+                                if(br_property == "Color Rate"):
+                                    if(values["Color Rate:"] != None):
+                                        spin_box.setValue(values["Color Rate:"] * 100) 
+                                elif(br_property == "Opacity"): 
+                                    if(values["Opacity:"] != None):
+                                        spin_box.setValue(values["Opacity:"] * 100)
+                                else:
+                                    if(values["Smudge Length:"] != None): 
+                                        spin_box.setValue(values["Smudge Length:" ] * 100)
+
+                        
+                        
+                                        
+    #----------------------------------------------------#
+    # Check Pressure Toggle Curve Check box of           #
+    # Corresponding Property                             #
+    #----------------------------------------------------#
+    
+        
+        
+
     #----------------------------------------------------#
     # Load the current state of brush property toggles   #
     #                                                    #
