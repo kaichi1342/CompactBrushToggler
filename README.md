@@ -26,8 +26,11 @@ This plugin allows one access to "Use Pressure Curve" checkboxes, that toggles p
 | Sft       | Softness Pen Pressure Toggle |
 | Rot       | Rotation Pen Pressure Toggle|
 | Sca       | Scatter Pen Pressure Toggle |
-| Overlay Mode       | Toggle Overlay Mode of Smudge Brush Engine |
-
+| Ovl       | Overlay Mode - Smudge Brush Engine Only|
+| Col       | Color Rate   |
+| Sok       | Soak Ink - Bristle Engine Only|
+| PtM       | Painting Mode |
+ 
 The plugin loads the state of the pressure settings once a brush is selected; 
 -- if its highlighted blue then the pressure setting is active
 -- if its not highlighted the pressure setting is inactive. 
@@ -49,15 +52,20 @@ The plugin loads the state of the pressure settings once a brush is selected;
 This plugin main function  are;
 
 1. Toggle Pen Pressure setting of a particular brush property
-> For now the pressure toggle are limited to 6 property namely,
+> For now the pressure toggle are limited to 7 property namely,
 - Size
 - Opacity
 - Flow
 - Softness
 - Rotation
 - Scatter
+- Color Rate
 2. Adjust the Horizontal Brush Fade setting of brushes with horizontal brush fade. 
 > This would allow adjustment to both fade property if the ratio link is connected. 
+3. 3 option Toggle that are not Pen Pressure  
+- Overlay
+- Soak Ink
+- Painting Mode
 
 If the global pressure setting is off, then this plugin pressure setting will also be off. 
 
@@ -91,6 +99,12 @@ You would need to switch to a different brush and back for it to properly reflec
 
 3. It wont follow Krita theme if you have different one. [it defaults to blue]
 
+4. Color Rate seems to have issues in other system 
+
+5. It stutters on some system due to polling
+
+6. as of Dec 31, 2022 5.4 nightly is causing problem
+
 ## Downloads - Install - Execute 
 
 ### Download
@@ -114,6 +128,10 @@ if not enable it by going to Settings -> Configure Krita -> **Python Plugin Mana
 - Krita 5 beta 5
 
 ### Release Log
+
+2022-01-04 : Version 0.1.3a
+- Re added Color Rate
+- Added Soak Ink and Painting Mode
 
 2022-03-11  : Version 0.1.2
 - Fix Opacity / Flow Load Status
