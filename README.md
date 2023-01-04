@@ -19,18 +19,18 @@ This plugin allows one access to "Use Pressure Curve" checkboxes, that toggles p
 
 | Abbreviation | Description | 
 | --- | --- |
-| Br.Fade   | Brush Fade Slider |
+| Fade      | Brush Fade Slider |
 | Sze       | Size Pen Pressure Toggle |
 | Opc       | Opacity Pen Pressure Toggle |
 | Flw       | Flow Pen Pressure Toggle |
 | Sft       | Softness Pen Pressure Toggle |
 | Rot       | Rotation Pen Pressure Toggle|
 | Sca       | Scatter Pen Pressure Toggle |
-| Ovl       | Overlay Mode |
+| Ovl       | Overlay Mode - Smudge Brush Engine Only|
 | Col       | Color Rate   |
-| Sok       | Soak Ink |
-| PtM       | Painting Mode
-
+| Sok       | Soak Ink - Bristle Engine Only|
+| PtM       | Painting Mode |
+ 
 The plugin loads the state of the pressure settings once a brush is selected; 
 -- if its highlighted blue then the pressure setting is active
 -- if its not highlighted the pressure setting is inactive. 
