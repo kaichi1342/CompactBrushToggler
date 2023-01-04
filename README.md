@@ -42,8 +42,11 @@ The plugin loads the state of the pressure settings once a brush is selected;
 *Overlay Mode for Smudge Brush*
 ![Overlay Mode](./screenshots/ui-brushtoggler2.jpeg)
 
-*Brush Fade Slider*
+*Soak Ink for Bristle Brush*
+![Overlay Mode](./screenshots/ui-brushtoggler3.jpeg)
 
+
+*Brush Fade Slider* 
 ![Brush Fade Slider](./screenshots/ui-brushfade.jpeg)
 
 
