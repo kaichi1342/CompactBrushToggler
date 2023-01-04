@@ -19,18 +19,18 @@ This plugin allows one access to "Use Pressure Curve" checkboxes, that toggles p
 
 | Abbreviation | Description | 
 | --- | --- |
-| Br.Fade   | Brush Fade Slider |
+| Fade      | Brush Fade Slider |
 | Sze       | Size Pen Pressure Toggle |
 | Opc       | Opacity Pen Pressure Toggle |
 | Flw       | Flow Pen Pressure Toggle |
 | Sft       | Softness Pen Pressure Toggle |
 | Rot       | Rotation Pen Pressure Toggle|
 | Sca       | Scatter Pen Pressure Toggle |
-| Ovl       | Overlay Mode |
+| Ovl       | Overlay Mode - Smudge Brush Engine Only|
 | Col       | Color Rate   |
-| Sok       | Soak Ink |
-| PtM       | Painting Mode
-
+| Sok       | Soak Ink - Bristle Engine Only|
+| PtM       | Painting Mode |
+ 
 The plugin loads the state of the pressure settings once a brush is selected; 
 -- if its highlighted blue then the pressure setting is active
 -- if its not highlighted the pressure setting is inactive. 
@@ -108,7 +108,7 @@ You would need to switch to a different brush and back for it to properly reflec
 ## Downloads - Install - Execute 
 
 ### Download
-- **[ZIP](https://github.com/kaichi1342/CompactBrushToggler/archive/refs/heads/v.0.1.1b.zip)**
+- **[ZIP](https://github.com/kaichi1342/CompactBrushToggler/archive/refs/heads/v.0.1.2.zip)**
 - **[Source](https://github.com/kaichi1342/CompactBrushToggler)**
 
 ### Install
