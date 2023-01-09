@@ -330,7 +330,7 @@ class CompactBrushToggler(DockWidget):
 
     def get_brush_editor(self):
         for window in QApplication.topLevelWidgets():
-            if isinstance(window, QFrame) and window.objectName() == 'KisPopupButtonFrame':
+            if isinstance(window, QFrame) and window.objectName() == 'popup frame':
                 for widget, _ in self.walk_widgets(window):
                     real_cls_name = widget.metaObject().className()
                     obj_name = widget.objectName()
