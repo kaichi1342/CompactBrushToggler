@@ -288,7 +288,7 @@ class CompactBrushToggler(DockWidget):
         self.BrushFade.setValue(self.BrushFadeSlider.value()/100)  
  
     def spinnerChangedFadeValue(self): 
-        self.BrushFadeSlider.setValue(self.BrushFade.value()*100)
+        self.BrushFadeSlider.setValue(int(self.BrushFade.value()*100))
         self.changeFadeValue()
     
     def changeFadeValue(self): 

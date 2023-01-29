@@ -505,7 +505,7 @@ class CBT_Toggler():
                 ft = 1
                 self.BrushFade.setEnabled(True)
                 self.BrushFadeSlider.setEnabled(True) 
-                self.BrushFadeSlider.setValue(spin_box.value()*100)  
+                self.BrushFadeSlider.setValue(int(spin_box.value()*100))  
                 break
 
         if ft == 0:
