@@ -13,31 +13,46 @@ This plugin allows one access to "Use Pressure Curve" checkboxes, that toggles p
 
 ## ScreenShots 
 
-*Interface*
+*Interface* 
+Interface Adjust Depending on the ratio of height and width of the button
 
-![Interface](./screenshots/ui.jpeg)
+| Icon Only | 3 Letter Abbr | Full Length Word |
+| --------- | ------------- | ----------- |
+![Interface](./screenshots/ui3.jpeg) |  ![Interface](./screenshots/ui.jpeg) | ![Interface](./screenshots/ui2.jpeg) |
 
-| Abbreviation | Description | 
-| --- | --- |
-| Br.Fade   | Brush Fade Slider |
-| Sze       | Size Pen Pressure Toggle |
-| Opc       | Opacity Pen Pressure Toggle |
-| Flw       | Flow Pen Pressure Toggle |
-| Sft       | Softness Pen Pressure Toggle |
-| Rot       | Rotation Pen Pressure Toggle|
-| Sca       | Scatter Pen Pressure Toggle |
-
+ 
+| Icon On | Icon Off | Abbreviation | Description | 
+| ------- | -------- | ------------ | ----------- |
+|         |          | Fade         | Brush Fade Slider |
+| ![Interface](./screenshots/icons/ico-size.png)    | ![Interface](./screenshots/icons/ico-pr-off.png)  | Sze       | Size Pen Pressure Toggle |
+| ![Interface](./screenshots/icons/ico-opc.png)     | ![Interface](./screenshots/icons/ico-pr-off.png)  | Opc       | Opacity Pen Pressure Toggle |
+| ![Interface](./screenshots/icons/ico-flw.png)     | ![Interface](./screenshots/icons/ico-pr-off.png)  | Flw       | Flow Pen Pressure Toggle |
+| ![Interface](./screenshots/icons/ico-sft.png)     | ![Interface](./screenshots/icons/ico-pr-off.png)  | Sft       | Softness Pen Pressure Toggle |
+| ![Interface](./screenshots/icons/ico-rot.png)     | ![Interface](./screenshots/icons/ico-pr-off.png)  | Rot       | Rotation Pen Pressure Toggle|
+| ![Interface](./screenshots/icons/ico-sct.png)     | ![Interface](./screenshots/icons/ico-pr-off.png)  | Sca       | Scatter Pen Pressure Toggle |
+| ![Interface](./screenshots/icons/ico-col.png)     | ![Interface](./screenshots/icons/ico-pr-off.png)  | Col       | Color Rate   |
+| ![Interface](./screenshots/icons/ico-ovl.png)     | ![Interface](./screenshots/icons/ico-ovl-off.png) | Ovl       | Overlay Mode - Smudge Brush Engine Only|
+| ![Interface](./screenshots/icons/ico-sok-on.png)  | ![Interface](./screenshots/icons/ico-sok-off.png) | Sok       | Soak Ink - Bristle Engine Only|
+| ![Interface](./screenshots/icons/ico-ptm-wash.png)| ![Interface](./screenshots/icons/ico-ptm-bld.png) | PtM       | Painting Mode : On -> Wash , Off -> Build |
+ 
 The plugin loads the state of the pressure settings once a brush is selected; 
 -- if its highlighted blue then the pressure setting is active
 -- if its not highlighted the pressure setting is inactive. 
 
 *Control Toggles*
-
 ![Use Pressure Curve Toggles](./screenshots/ui-brushtoggler.jpeg)
 
+*Paint Mode*
+![Overlay Mode](./screenshots/ui-brushtoggler4.jpeg)
 
-*Brush Fade Slider*
+*Overlay Mode for Smudge Brush*
+![Overlay Mode](./screenshots/ui-brushtoggler2.jpeg)
 
+*Soak Ink for Bristle Brush*
+![Overlay Mode](./screenshots/ui-brushtoggler3.jpeg)
+
+
+*Brush Fade Slider* 
 ![Brush Fade Slider](./screenshots/ui-brushfade.jpeg)
 
 
@@ -46,15 +61,20 @@ The plugin loads the state of the pressure settings once a brush is selected;
 This plugin main function  are;
 
 1. Toggle Pen Pressure setting of a particular brush property
-> For now the pressure toggle are limited to 6 property namely,
+> For now the pressure toggle are limited to 7 property namely,
 - Size
 - Opacity
 - Flow
 - Softness
 - Rotation
 - Scatter
+- Color Rate
 2. Adjust the Horizontal Brush Fade setting of brushes with horizontal brush fade. 
 > This would allow adjustment to both fade property if the ratio link is connected. 
+3. 3 option Toggle that are not Pen Pressure  
+- Overlay
+- Soak Ink
+- Painting Mode
 
 If the global pressure setting is off, then this plugin pressure setting will also be off. 
 
@@ -88,10 +108,16 @@ You would need to switch to a different brush and back for it to properly reflec
 
 3. It wont follow Krita theme if you have different one. [it defaults to blue]
 
+4. Color Rate seems to have issues in other system 
+
+5. It stutters on some system due to polling
+
+6. as of Dec 31, 2022 5.4 nightly is causing problem
+
 ## Downloads - Install - Execute 
 
 ### Download
-- **[ZIP](https://github.com/kaichi1342/CompactBrushToggler/archive/refs/heads/v.0.1.1b.zip)**
+- **[ZIP](https://github.com/kaichi1342/CompactBrushToggler/archive/refs/heads/v.0.1.3a.zip)**
 - **[Source](https://github.com/kaichi1342/CompactBrushToggler)**
 
 ### Install
@@ -111,6 +137,22 @@ if not enable it by going to Settings -> Configure Krita -> **Python Plugin Mana
 - Krita 5 beta 5
 
 ### Release Log
+
+2022-01-05 : Version 0.1.4
+- Added Icons and Icon Only Mode
+- Remove Fade Label on Fade Slider
+- Can now be used for Krita 5.2 and 5.1 
+
+
+2022-01-04 : Version 0.1.3a
+- Re added Color Rate
+- Added Soak Ink and Painting Mode
+
+2022-03-11  : Version 0.1.2
+- Fix Opacity / Flow Load Status
+- Added Overlay Mode for Smudge Brush
+- Added disabling of none existing properties
+- Re-organize UI 
 
 2021-12-22  : Version 0.1.1b
 - First Released Version 
