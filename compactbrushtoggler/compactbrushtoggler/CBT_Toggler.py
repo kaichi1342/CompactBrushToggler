@@ -40,6 +40,11 @@ class CBT_Toggler():
     cur_size    = 1 
 
     toggleState = {}
+    
+    theme_color = {
+        "dark"  : {"on" :  "background-color : #305475; color : #D2D2D2;", "off" : "background-color : #383838 : color : #D2D2D2;", "disabled" : "background-color : #1a1a1a; color : #9A9A9A;"},
+        "light" : {"on" :  "background-color : #8BD5F0; color : #9A9A9A;", "off" : "background-color : #1a1a1a : color : #373737;", "disabled" : "background-color : #9A9A9A; color : #2a2a2a;"}
+    } 
 
     br_values = {"Size:" : None, "Opacity:" : None, "Color Rate:" : None, "Smudge Length:" : None, "Angle:" : None, "Smudge mode:" : "Dulling"}
 
@@ -47,6 +52,7 @@ class CBT_Toggler():
         "Size","Opacity","Flow","Softness","Rotation",
         "Scatter","Color Rate","Overlay Mode", "Ink depletion","Painting Mode", "Brush Tip" 
     ] 
+ 
     
     #Painting Mode : 0 => Build Up , 1 => Wash
     
@@ -81,10 +87,10 @@ class CBT_Toggler():
         }
     }
 
-    def __init__(self, parent, theme_preset): 
+    def __init__(self, parent, theme_preset = False): 
         self.parent = parent 
         self.cbt_icons   = CBT_Icons(self)  
-        self.theme_color = theme_preset
+        self.theme_color = theme_preset if theme_preset != False else self.theme_color
         pass
     
     def setInputItems(self, brush_property, fade_spinner, fade_slider):
