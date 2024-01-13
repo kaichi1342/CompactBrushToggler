@@ -142,7 +142,7 @@ if not enable it by going to Settings -> Configure Krita -> **Python Plugin Mana
 
 ### Release Log
 
-2025-01-13 : Version 0.1.5
+2024-01-13 : Version 0.1.5
 - Fix Enabling/Disabling Bug
 - Added Support for French, Spanish, Korean Languages
 - Added French, Spanish, Korean Translation  
