@@ -117,7 +117,9 @@ You would need to switch to a different brush and back for it to properly reflec
 ## Downloads - Install - Execute 
 
 ### Download
+v.0.1.5
 - **[ZIP](https://github.com/kaichi1342/CompactBrushToggler/archive/refs/heads/v.0.1.5.zip)**
+master
 - **[Source](https://github.com/kaichi1342/CompactBrushToggler)**
 
 ### Install
