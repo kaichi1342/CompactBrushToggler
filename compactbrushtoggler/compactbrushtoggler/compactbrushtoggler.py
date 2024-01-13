@@ -69,8 +69,8 @@ class CBTDoubleSpinBox(QDoubleSpinBox):
 class CompactBrushToggler(DockWidget):
     
     theme_color = {
-        "dark"  : {"on" :  "background-color : #305475; color : #D2D2D2;", "off" : "background-color : #383838 : color : #D2D2D2;", "disabled" : "background-color : #1a1a1a; color : #9A9A9A;"},
-        "light" : {"on" :  "background-color : #8BD5F0; color : #9A9A9A;", "off" : "background-color : #1a1a1a : color : #373737;", "disabled" : "background-color : #9A9A9A; color : #2a2a2a;"}
+        "dark"  : {"on" :  "background-color : #305475; color : #D2D2D2;", "off" : "background-color : #383838 ; color : #D2D2D2;", "disabled" : "background-color : #1a1a1a; color : #9A9A9A;"},
+        "light" : {"on" :  "background-color : #8BD5F0; color : #9A9A9A;", "off" : "background-color : #1a1a1a ; color : #373737;", "disabled" : "background-color : #9A9A9A; color : #2a2a2a;"}
     } 
     
 
@@ -101,7 +101,7 @@ class CompactBrushToggler(DockWidget):
     def setUI_H(self):
 
         self.baseWidget.setMinimumSize(QSize(60,100))
-        self.baseWidget.setMaximumSize(QSize(350,650)) 
+        self.baseWidget.setMaximumSize(QSize(450,850)) 
 
         self.timer = QTimer() 
 
@@ -132,7 +132,7 @@ class CompactBrushToggler(DockWidget):
   
         self.vbox.addWidget(self.hRow1)    
         self.vbox.addWidget(self.hRow2)   
-        #self.vbox.addWidget(self.lbl_test)  
+        self.vbox.addWidget(self.lbl_test)  
 
 
         self.BrushProperty       = { }
@@ -249,13 +249,13 @@ class CompactBrushToggler(DockWidget):
     def setNames(self):
         #self.Theme_Changed()
         ratio =  self.BrushProperty["Size"].width() / self.BrushProperty["Size"].height() 
-        self.lbl_test.setText("")
+       
         if ratio > 4:
             for prop in self.toggler.toggleState.keys():    
-                self.BrushProperty[prop].setText( self.toggler.brush_text["full"][prop]) 
+                self.BrushProperty[prop].setText( self.toggler.translation[prop]["tr"]) 
         elif ratio > 2:
             for prop in self.toggler.toggleState.keys():    
-                self.BrushProperty[prop].setText( self.toggler.brush_text["short"][prop]) 
+                self.BrushProperty[prop].setText( self.toggler.translation[prop]["abr"]) 
         else:  
             for prop in self.toggler.toggleState.keys():    
                 self.BrushProperty[prop].setText("")
@@ -270,12 +270,12 @@ class CompactBrushToggler(DockWidget):
 
     def reloadPreset(self):
         Krita.instance().action('reload_preset_action').trigger()
-        self.lbl_test.setText("")  
+ 
         self.toggler.loadState()
         
             
     def loadBrushState(self):  
-        self.lbl_test.setText("")
+        
         self.toggler.loadState()
 
     #----------------------------------------------------#

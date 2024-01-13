@@ -117,7 +117,9 @@ You would need to switch to a different brush and back for it to properly reflec
 ## Downloads - Install - Execute 
 
 ### Download
-- **[ZIP](https://github.com/kaichi1342/CompactBrushToggler/archive/refs/heads/v.0.1.4.zip)**
+v.0.1.5
+- **[ZIP](https://github.com/kaichi1342/CompactBrushToggler/archive/refs/heads/v.0.1.5.zip)**
+master
 - **[Source](https://github.com/kaichi1342/CompactBrushToggler)**
 
 ### Install
@@ -133,16 +135,22 @@ if not enable it by going to Settings -> Configure Krita -> **Python Plugin Mana
 
 
 ### Tested Platforms
+- Krita 5.2 
+- Krita 5.1
 - Krita 5.1.0 Pre-alpha
 - Krita 5 beta 5
 
 ### Release Log
 
-2022-01-05 : Version 0.1.4
+2025-01-13 : Version 0.1.5
+- Fix Enabling/Disabling Bug
+- Added Support for French, Spanish, Korean Languages
+- Added French, Spanish, Korean Translation  
+
+2023-01-05 : Version 0.1.4
 - Added Icons and Icon Only Mode
 - Remove Fade Label on Fade Slider
 - Can now be used for Krita 5.2 and 5.1 
-
 
 2022-01-04 : Version 0.1.3a
 - Re added Color Rate
