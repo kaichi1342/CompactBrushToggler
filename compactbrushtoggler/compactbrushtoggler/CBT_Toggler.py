@@ -22,9 +22,10 @@
 # [Size, Opacity, Flow, Softness, Scatter, Rotation ] and adjust              #
 # brush hfade without opening the Brush Editor.                               #
 # -----------------------------------------------------------------------------
-       
+        
+import os, math, json
 
-from PyQt5.QtCore import (  QItemSelectionModel, QSize, QTimer, Qt, pyqtSignal )
+from PyQt5.QtCore import (  QItemSelectionModel, QSize, QTimer, Qt, pyqtSignal, QLocale )
  
 from PyQt5.QtWidgets import (
     QApplication, QCheckBox, QListView,
@@ -33,8 +34,10 @@ from PyQt5.QtWidgets import (
 )
  
 from .CBT_Icons import * 
+from .CBT_Translation import * 
 
 class CBT_Toggler():
+    language    = [] 
     
     last_brush  = ""
     cur_size    = 1 
@@ -42,8 +45,8 @@ class CBT_Toggler():
     toggleState = {}
     
     theme_color = {
-        "dark"  : {"on" :  "background-color : #305475; color : #D2D2D2;", "off" : "background-color : #383838 : color : #D2D2D2;", "disabled" : "background-color : #1a1a1a; color : #9A9A9A;"},
-        "light" : {"on" :  "background-color : #8BD5F0; color : #9A9A9A;", "off" : "background-color : #1a1a1a : color : #373737;", "disabled" : "background-color : #9A9A9A; color : #2a2a2a;"}
+        "dark"  : {"on" :  "background-color : #305475; color : #D2D2D2;", "off" : "background-color : #383838 ; color : #D2D2D2;", "disabled" : "background-color : #1a1a1a; color : #9A9A9A;"},
+        "light" : {"on" :  "background-color : #8BD5F0; color : #9A9A9A;", "off" : "background-color : #1a1a1a ; color : #373737;", "disabled" : "background-color : #9A9A9A; color : #2a2a2a;"}
     } 
 
     br_values = {"Size:" : None, "Opacity:" : None, "Color Rate:" : None, "Smudge Length:" : None, "Angle:" : None, "Smudge mode:" : "Dulling"}
@@ -89,18 +92,42 @@ class CBT_Toggler():
 
     def __init__(self, parent, theme_preset = False): 
         self.parent = parent 
-        self.cbt_icons   = CBT_Icons(self)  
+        self.cbt_icons     = CBT_Icons(self)  
         self.theme_color = theme_preset if theme_preset != False else self.theme_color
-        pass
-    
+
+        translation   = CBT_Translation(self)  
+        self.translation = translation.getTranslationTable()
+        #self.lang = translation.getLanguage()
+        
+ 
     def setInputItems(self, brush_property, fade_spinner, fade_slider):
         self.BrushProperty = brush_property
         self.BrushFadeSlider = fade_slider
         self.BrushFade = fade_spinner
     
     def setTheme(self, theme):
-        self.theme = theme
-        pass
+        self.theme = theme 
+     
+
+    def translate(self, key):
+        tn_table = self.translation
+        prop = tn_table[key]
+
+        return  prop["tr"] if prop["tr"] else prop["en"]
+
+    def translateEn(self, key):
+        tn_table = self.translation
+        prop = tn_table[key]
+
+        return  prop["en"]
+
+
+    def setTestLabel(self, text, append = False):
+        if append:
+            self.parent.lbl_test.setText(self.parent.lbl_test.text() + text)
+        else:
+            self.parent.lbl_test.setText(text)
+
     
     #----------------------------------------------------#
     # For Changing Info                                  #
@@ -112,9 +139,10 @@ class CBT_Toggler():
         self.cur_size  = Krita.instance().activeWindow().activeView().brushSize()
  
         #self.get_palette_values() 
-        if cur_brush.name() != self.last_brush :    
+        if cur_brush.name() != self.last_brush :  
+            self.resetPropertyFn()   
             self.last_brush = cur_brush.name()  
-            self.loadState()
+            self.loadState() 
             
               
     #----------------------------------------------------#
@@ -126,7 +154,7 @@ class CBT_Toggler():
         self.cur_size  = Krita.instance().activeWindow().activeView().brushSize()
         
         if(self.toggleState[prop] == True):
-            self.setOptions(prop, False)
+            self.setOptions( prop , False)
             self.toggleState[prop] = False 
             self.toggleIcon(prop,False)
         else:
@@ -136,8 +164,8 @@ class CBT_Toggler():
  
         self.setBrushSize() 
     
-    
-        
+     
+           
     def toggleIcon(self, prop, state):  
  
         def_color  = self.theme_color[self.theme]["off"] if not state  else self.theme_color[self.theme]["on"]    
@@ -205,6 +233,9 @@ class CBT_Toggler():
         option_widget_container = editor.findChild(QWidget, 'frmOptionWidgetContainer')
         current_view = None
         selectedRow  = None 
+
+        tra_property = self.translate(br_property)
+
         for view in option_widget_container.findChildren(QListView):
             if view.metaObject().className() == 'KisCategorizedListView':
                 if view.isVisibleTo(option_widget_container):
@@ -218,7 +249,7 @@ class CBT_Toggler():
             target_index = None
             for row in range(model.rowCount()):
                 index = model.index(row,0)   
-                if index.data() == br_property: 
+                if index.data() == tra_property: 
                     target_index = index
                     selectedRow = row
                     break
@@ -252,11 +283,13 @@ class CBT_Toggler():
         option_widget_container = container_info["option_widget_container"] 
         current_settings_widget = container_info["current_settings_widget"]  
         
+        tra_property = self.translate(br_property)
+         
         if current_view: 
 
-            if br_property == "Painting Mode":
+            if tra_property == self.translate("Painting Mode"):
                 self.setPaintMode(br_property, new_state, m_index, current_view, current_settings_widget, option_widget_container)
-            elif br_property == "Ink depletion":
+            elif tra_property == self.translate("Ink depletion"):
                 self.setSoakInk(br_property, new_state, m_index, current_view, current_settings_widget, option_widget_container)
             else: 
                 self.setCheckBoxUseCurve(br_property, new_state, m_index, current_view, current_settings_widget, option_widget_container)
@@ -265,12 +298,15 @@ class CBT_Toggler():
 
     def setCheckBoxUseCurve(self, br_property, new_state, m_index, current_view, current_settings_widget, option_widget_container):
         model = current_view.model()
+
+        tra_property = self.translate(br_property)
+ 
         for check_box in current_settings_widget.findChildren(QCheckBox, 'checkBoxUseCurve'):
-            if br_property == "Overlay Mode":
+            if tra_property == self.translate("Overlay Mode"):
                 model.setData(m_index, Qt.Checked, Qt.CheckStateRole)  if new_state else model.setData(m_index, Qt.Unchecked , Qt.CheckStateRole)
 
             if check_box.isVisibleTo(option_widget_container):
-                if (br_property != "Opacity" and br_property != "Flow"):
+                if tra_property != self.translate("Opacity") and tra_property != self.translate("Flow") :
                     model.setData(m_index, Qt.Checked, Qt.CheckStateRole) if new_state  else model.setData(m_index, Qt.Unchecked , Qt.CheckStateRole)
                             
                 check_box.setChecked(new_state)  
@@ -393,9 +429,10 @@ class CBT_Toggler():
             model = current_view.model()
             target_index = None
             for br_property in props:
+                tra_property = self.translate(br_property)
                 for row in range(model.rowCount()):
                     index = model.index(row)   
-                    if index.data() == br_property: 
+                    if index.data() == tra_property: 
                         target_index = index
                         break
                         
@@ -409,8 +446,8 @@ class CBT_Toggler():
                     if(target_index.data() in props ): 
                         for combo in current_settings_widget.findChildren(QComboBox):   
                             if(combo.isVisibleTo(option_widget_container) and combo.metaObject().className() == "QComboBox"): 
-                                if(combo.currentText() == "Dulling" or combo.currentText() == "Smearing"): 
-                                    if(values["Smudge mode:"] != None):
+                                if combo.currentText() == self.translate("Dulling") or combo.currentText() == self.translate("Smearing"): 
+                                    if values["Smudge mode:"] != None:
                                         index = combo.findText(values["Smudge mode:"], Qt.MatchFixedString)
                                         if index >= 0:
                                                 combo.setCurrentIndex(index) 
@@ -418,21 +455,21 @@ class CBT_Toggler():
                                         
                         for spin_box in current_settings_widget.findChildren(QDoubleSpinBox):    
                             if(spin_box.isVisibleTo(option_widget_container) and spin_box.metaObject().className() == "KisAngleSelectorSpinBox"): 
-                                if(br_property == "Brush Tip"):
-                                    if(values["Angle:"] != None):
+                                if tra_property == self.translate("Brush Tip"):
+                                    if values["Angle:"] != None:
                                         spin_box.setValue(values["Angle:"])
                                         break
                                         
                         for spin_box in current_settings_widget.findChildren(QDoubleSpinBox, 'strengthSlider'):    
                             if(spin_box.isVisibleTo(option_widget_container)):   
-                                if(br_property == "Color Rate"):
+                                if tra_property == self.translate("Color Rate"):
                                     if(values["Color Rate:"] != None):
                                         spin_box.setValue(values["Color Rate:"] * 100) 
-                                elif(br_property == "Opacity"): 
-                                    if(values["Opacity:"] != None):
+                                elif tra_property == self.translate("Opacity"): 
+                                    if values["Opacity:"] != None:
                                         spin_box.setValue(values["Opacity:"] * 100)
                                 else:
-                                    if(values["Smudge Length:"] != None): 
+                                    if values["Smudge Length:"] != None: 
                                         spin_box.setValue(values["Smudge Length:" ] * 100)
 
                         
@@ -455,11 +492,12 @@ class CBT_Toggler():
         editor = self.get_brush_editor()
         option_widget_container = editor.findChild(QWidget, 'frmOptionWidgetContainer')
          
-        
         current_view = self.findView(option_widget_container)
           
         #disable option here
         for br_property in self.property: 
+            tra_property = self.translate(br_property)
+
             if current_view:
                 current_settings_widget = current_view.parent()
                 s_model = current_view.selectionModel()
@@ -467,13 +505,13 @@ class CBT_Toggler():
                 target_index = None
                 for row in range(model.rowCount()):
                     index = model.index(row)   
-                    if index.data() == br_property: 
+                    if index.data() == tra_property: 
                         target_index = index
                         break
 
                 self.evalTargetIndex(target_index, s_model, current_view, br_property, current_settings_widget, option_widget_container)   
                  
-            self.isPropertyExist(br_property)
+        self.isPropertyExist()
 
     
     def findView(self, option_widget_container):
@@ -496,16 +534,20 @@ class CBT_Toggler():
         current_view.setCurrentIndex(target_index)
         current_view.activated.emit(target_index)
         
-        if(br_property != "Brush Tip"): 
+        tra_property = self.translate(br_property)
+       
+        if(tra_property != self.translate("Brush Tip")):   
             m_check = self.setOptionProperty(br_property, target_index, current_settings_widget, option_widget_container)              
         else:  
             self.setOptionBrushTip(current_settings_widget, option_widget_container)
-            
-    #toggling is done here
+    
+    #-----------------------#
+    # toggling is done here #
+    #-----------------------#
 
     def setOptionBrushTip(self, current_settings_widget, option_widget_container): 
         ft = 0  
-           
+          
         for spin_box in current_settings_widget.findChildren(QDoubleSpinBox, 'inputHFade'): 
             if spin_box.isVisibleTo(option_widget_container): 
                 ft = 1
@@ -522,27 +564,36 @@ class CBT_Toggler():
     def setOptionProperty(self, br_property, target_index, current_settings_widget, option_widget_container):
         m_check = False
 
-        if (br_property != "Opacity" and br_property != "Flow" and br_property != 'Painting Mode') and target_index.flags() & Qt.ItemIsUserCheckable:
+        tra_property = self.translate(br_property)
+        
+        self.property_fn[br_property] = 0   
+        #found = False
+
+        if (tra_property != self.translate("Opacity") and tra_property != self.translate("Flow") and tra_property != self.translate("Painting Mode")) and target_index.flags() & Qt.ItemIsUserCheckable:
             self.property_fn[br_property] = 1 
             m_check = True if target_index.data(Qt.CheckStateRole) else False 
 
-        if br_property == "Overlay Mode":
+        if tra_property == self.translate("Overlay Mode"):
             self.property_fn[br_property] = 1
             self.checkState(br_property, target_index.data(Qt.CheckStateRole), True)
+       
         
-        if br_property == "Ink depletion" :  
+        if tra_property == self.translate("Ink depletion") :  
             self.loadSoakInk(br_property, m_check, current_settings_widget, option_widget_container)
-        elif br_property == "Painting Mode":
+        elif tra_property == self.translate("Painting Mode"):
             self.loadPaintMode(br_property, m_check, current_settings_widget, option_widget_container)
         else:
             self.loadUseCurve(br_property, m_check, current_settings_widget, option_widget_container)
         
+        
         return m_check
 
     def loadUseCurve(self, br_property, m_check, current_settings_widget, option_widget_container ):
+        tra_property = self.translate(br_property)
+
         for check_box in current_settings_widget.findChildren(QCheckBox, 'checkBoxUseCurve'):  
             self.property_fn[br_property] = 1
-            if br_property != "Opacity" and br_property != "Flow"  and check_box.isVisibleTo(option_widget_container) :    
+            if tra_property != self.translate("Opacity") and tra_property != self.translate("Flow")  and check_box.isVisibleTo(option_widget_container) :    
                 self.checkState(br_property, check_box.isChecked(), m_check)
                 break
             else: 
@@ -575,16 +626,27 @@ class CBT_Toggler():
             self.toggleIcon(br_property,False) 
  
 
-    def isPropertyExist(self,br_property): 
-        for br_property in self.property: 
-            if(br_property != "Brush Tip"): 
-                if(self.property_fn[br_property] == 1):
-                    self.BrushProperty[br_property].setEnabled(True)
-                else: 
-                    self.BrushProperty[br_property].setEnabled(False)
-                    self.toggleState[br_property] = False
-                    self.toggleIcon(br_property,False) 
-                    self.BrushProperty[br_property].setStyleSheet(self.theme_color[self.theme]["disabled"])
+    def isPropertyExist(self): 
+        for br_property in self.property_fn.keys(): 
+            tra_property = self.translate(br_property)
+            if(br_property == "Brush Tip"): continue    
 
+            if(self.property_fn[br_property] == 1): 
+                self.BrushProperty[br_property].setEnabled(True)
+            else:  
+                self.toggleState[br_property] = False
+                self.toggleIcon(br_property,False)  
+                self.BrushProperty[br_property].setStyleSheet(self.theme_color[self.theme]["disabled"])
+                self.BrushProperty[br_property].setEnabled(False)
+        
              
-    
+    def resetPropertyFn(self, text = ""):  
+        for property in self.property_fn.keys(): 
+            if(property == "Brush Tip"): continue    
+            self.property_fn[property] = 0   
+     
+    def printPropertyFn(self, text = ""): 
+        for property in self.property_fn.keys(): 
+            if(property == "Brush Tip"): continue    
+            self.setTestLabel(property + " : " + str( self.property_fn[property] ) + ",", True)
+  
