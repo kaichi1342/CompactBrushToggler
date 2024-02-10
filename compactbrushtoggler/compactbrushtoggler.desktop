@@ -1,8 +1,0 @@
-[Desktop Entry]
-Type=Service
-ServiceTypes=Krita/PythonPlugin
-X-KDE-Library=compactbrushtoggler
-X-Python-2-Compatible=false
-X-Krita-Manual=Manual.html
-Name=Compact Brush Toggler
-Comment=This is docker that provides toggle button for 10 different brush properties and a slider for brush fade.
