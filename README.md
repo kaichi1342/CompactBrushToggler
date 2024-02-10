@@ -30,9 +30,9 @@ Interface Adjust Depending on the ratio of height and width of the button
 | ![Interface](./screenshots/icons/ico-sft-on.png)     | ![Interface](./screenshots/icons/ico-sft-off.png)  | Sft       | Softness Pen Pressure Toggle |
 | ![Interface](./screenshots/icons/ico-rot-on.png)     | ![Interface](./screenshots/icons/ico-rot-off.png)  | Rot       | Rotation Pen Pressure Toggle|
 | ![Interface](./screenshots/icons/ico-sct-on.png)     | ![Interface](./screenshots/icons/ico-sct-off.png)  | Sca       | Scatter Pen Pressure Toggle |
-| ![Interface](./screenshots/icons/ico-rot-on.png)     | ![Interface](./screenshots/icons/ico-rot-off.png)  | Rot       | Smudge Length Pressure Toggle - Smudge Brush |
-| ![Interface](./screenshots/icons/ico-smdl-on.png)    | ![Interface](./screenshots/icons/ico-smdl-off.png) | Sca       | Smudge Moed Toggle - Smudge Brush : On -> Smearing , Off -> Dulling  |
-| ![Interface](./screenshots/icons/ico-smdm-on.png)     | ![Interface](./screenshots/icons/ico-smdm-off.png)   | SmdLn       | Color Rate Pressure Toggle |
+| ![Interface](./screenshots/icons/ico-smdl-on.png)     | ![Interface](./screenshots/icons/ico-smdl-off.png)  | Rot       | Smudge Length Pressure Toggle - Smudge Brush |
+| ![Interface](./screenshots/icons/ico-smdm-on.png)    | ![Interface](./screenshots/icons/ico-smdm-off.png) | Sca       | Smudge Moed Toggle - Smudge Brush : On -> Smearing , Off -> Dulling  |
+| ![Interface](./screenshots/icons/ico-col-on.png)     | ![Interface](./screenshots/icons/ico-col-off.png)   | SmdLn       | Color Rate Pressure Toggle |
 | ![Interface](./screenshots/icons/ico-ovl-on.png)     | ![Interface](./screenshots/icons/ico-ovl-off.png)  | SmdMd       | Overlay Mode - Smudge Brush|
 | ![Interface](./screenshots/icons/ico-sok-on.png)     | ![Interface](./screenshots/icons/ico-sok-off.png)  | Sok       | Soak Ink - Bristle Brush|
 | ![Interface](./screenshots/icons/ico-ptm-wash.png)   | ![Interface](./screenshots/icons/ico-ptm-bld.png)  | PtM       | Painting Mode : On -> Wash , Off -> Build |
