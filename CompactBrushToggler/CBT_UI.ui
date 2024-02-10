@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Widget</class>
+ 
+ <widget class="QWidget" name="toggleTools">   
+    <property name="minimumSize">
+        <size>
+        <width>70</width>
+        <height>100</height>
+        </size>
+    </property>
+    <property name="maximumSize">
+        <size>
+        <width>450</width>
+        <height>850</height>
+        </size>
+    </property> 
+    <layout class="QGridLayout" name="toolGrid">
+      <item row="0" column="0" colspan="5">
+        <widget class="QSlider" name="BrushFadeSlider">
+            <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="maximum">
+                <number>100</number>
+            </property>
+            <property name="tickInterval">
+                <number>1</number>
+            </property>
+        </widget>
+      </item>   
+      <item row="1" column="0" colspan="6">
+        <layout class="QGridLayout" name="toggleGrid">
+
+        </layout>
+      </item>   
+    </layout> 
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

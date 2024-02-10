@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ActionCollection version="2" name="Scripts">
+    <Actions category="Scripts">
+        <text>Compact Brush Toggler</text>
+
+        <Action name="toggle_pressure_size">
+          <text>Toggle Presure Size</text>
+          <shortcut></shortcut>
+          <isCheckable>false</isCheckable>
+        </Action>
+        <Action name="toggle_pressure_opacity">
+          <text>Toggle Presure Opacity</text>
+          <shortcut></shortcut>
+          <isCheckable>false</isCheckable>
+        </Action>
+
+        <Action name="toggle_pressure_flow">
+          <text>Toggle Presure Flow</text>
+          <shortcut></shortcut>
+          <isCheckable>false</isCheckable>
+        </Action>
+
+        <Action name="toggle_pressure_softness">
+          <text>Toggle Presure Softness</text>
+          <shortcut></shortcut>
+          <isCheckable>false</isCheckable>
+        </Action>
+
+        <Action name="toggle_pressure_rotation">
+          <text>Toggle Presure Rotation</text>
+          <shortcut></shortcut>
+          <isCheckable>false</isCheckable>
+        </Action>
+
+        <Action name="toggle_pressure_scatter">
+          <text>Toggle Presure Scatter</text>
+          <shortcut></shortcut>
+          <isCheckable>false</isCheckable>
+        </Action>
+
+        <Action name="toggle_smudge_length">
+          <text>Toggle Presure Smudge Length</text>
+          <shortcut></shortcut>
+          <isCheckable>false</isCheckable>
+        </Action>
+        
+        <Action name="toggle_smudge_mode">
+          <text>Toggle Smudge Mode</text>
+          <shortcut></shortcut>
+          <isCheckable>false</isCheckable>
+        </Action>
+
+        <Action name="toggle_pressure_colrate">
+          <text>Toggle Presure Color Rate</text>
+          <shortcut></shortcut>
+          <isCheckable>false</isCheckable>
+        </Action>
+        
+        <Action name="toggle_soak">
+          <text>Toggle Soak Ink</text>
+          <shortcut></shortcut>
+          <isCheckable>false</isCheckable>
+        </Action>
+
+        <Action name="toggle_overlay">
+          <text>Toggle Overlay Mode</text>
+          <shortcut></shortcut>
+          <isCheckable>false</isCheckable>
+        </Action>
+
+        <Action name="toggle_painting_mode">
+          <text>Toggle Painting Mode</text>
+          <shortcut></shortcut>
+          <isCheckable>false</isCheckable>
+        </Action>
+    </Actions>
+</ActionCollection>
