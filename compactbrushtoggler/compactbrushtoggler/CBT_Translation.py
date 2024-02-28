@@ -29,6 +29,7 @@ from PyQt5.QtCore import (  QLocale )
 
 
 class CBT_Translation():
+    
     translation = {
          "Size"          : { "en" : "Size",          "tr" : "",  "abr"  : ""},
          "Opacity"       : { "en" : "Opacity",       "tr" : "",  "abr"  : "" },
@@ -38,12 +39,13 @@ class CBT_Translation():
          "Scatter"       : { "en" : "Scatter",       "tr" : "",  "abr"  : "" },
          "Color Rate"    : { "en" : "Color Rate",    "tr" : "",  "abr"  : "" },
          "Overlay Mode"  : { "en" : "Overlay Mode",  "tr" : "",  "abr"  : "" },
-         "Ink depletion" : { "en" : "Ink depletion", "tr" : "",  "abr"  : "" },
+         "Ink depletion" : { "en" : "Soak Ink",      "tr" : "",  "abr"  : "" },
          "Painting Mode" : { "en" : "Painting Mode", "tr" : "",  "abr"  : "" },
          "Brush Tip"     : { "en" : "Brush Tip",     "tr" : "",  "abr"  : "" },
+         "Smudge Length" : { "en" : "Smudge Length", "tr" : "",  "abr"  : "" },
+         "Smudge Mode"   : { "en" : "Smudge Mode",   "tr" : "",  "abr"  : "" },
          "Dulling"       : { "en" : "Painting Mode", "tr" : "",  "abr"  : "" },
          "Smearing"      : { "en" : "Brush Tip",     "tr" : "",  "abr"  : "" },
- 
     }
  
     def __init__(self, parent): 
@@ -87,6 +89,8 @@ class CBT_Translation():
         self.translation["Brush Tip"]["tr"]     = "Brush Tip"
         self.translation["Dulling"]["tr"]       = "Dulling"
         self.translation["Smearing"]["tr"]      = "Smearing"
+        self.translation["Smudge Length"]["tr"] = "Smudge Length"
+        self.translation["Smudge Mode"]["tr"]   = "Smudge Mode"
         
         self.translation["Size"]["abr"]          = "Sze"
         self.translation["Opacity"]["abr"]       = "Opc"
@@ -98,6 +102,8 @@ class CBT_Translation():
         self.translation["Overlay Mode"]["abr"]  = "Ovl"
         self.translation["Ink depletion"]["abr"] = "Sok"
         self.translation["Painting Mode"]["abr"] = "Ptm" 
+        self.translation["Smudge Length"]["abr"] = "SmL"
+        self.translation["Smudge Mode"]["abr"]   = "SmM" 
 
     def setFR_fr(self):
         self.translation["Size"]["tr"]          = "Taille"
@@ -111,6 +117,8 @@ class CBT_Translation():
         self.translation["Ink depletion"]["tr"] = "Épuisement de l'encre"
         self.translation["Painting Mode"]["tr"] = "Mode de dessin"
         self.translation["Brush Tip"]["tr"]     = "Pointe de brosse"
+        self.translation["Smudge Length"]["tr"] = "Longueur d'étalement"
+        self.translation["Smudge Mode"]["tr"]   = "Mode d'étalement"
         
         self.translation["Size"]["abr"]          = "Tle"
         self.translation["Opacity"]["abr"]       = "Opc"
@@ -122,6 +130,8 @@ class CBT_Translation():
         self.translation["Overlay Mode"]["abr"]  = "Inc"
         self.translation["Ink depletion"]["abr"] = "Épu"
         self.translation["Painting Mode"]["abr"] = "Des" 
+        self.translation["Smudge Length"]["abr"] = "Ldé"
+        self.translation["Smudge Mode"]["abr"]   = "Mdé" 
 
     def setSP_sp(self):
         self.translation["Size"]["tr"]          = "Tamaño"
@@ -135,6 +145,8 @@ class CBT_Translation():
         self.translation["Ink depletion"]["tr"] = "Agotamiento de la tinta"
         self.translation["Painting Mode"]["tr"] = "Modo de pintura"
         self.translation["Brush Tip"]["tr"]     = "Punta del pincel"
+        self.translation["Smudge Length"]["tr"] = "Longitud de la mancha"
+        self.translation["Smudge Mode"]["tr"]   = "Modo de manchado"
 
         self.translation["Size"]["abr"]          = "Tmñ"
         self.translation["Opacity"]["abr"]       = "Opc"
@@ -146,6 +158,8 @@ class CBT_Translation():
         self.translation["Overlay Mode"]["abr"]  = "Sup"
         self.translation["Ink depletion"]["abr"] = "Ago"
         self.translation["Painting Mode"]["abr"] = "Pin" 
+        self.translation["Smudge Length"]["abr"] = "Ldé"
+        self.translation["Smudge Mode"]["abr"]   = "Mdm" 
 
     def setKr_sk(self):
         self.translation["Size"]["tr"]          = "크기"
@@ -159,6 +173,8 @@ class CBT_Translation():
         self.translation["Ink depletion"]["tr"] = "잉크 소모"
         self.translation["Painting Mode"]["tr"] = "그리기 모드"
         self.translation["Brush Tip"]["tr"]     = "브고시 끌"
+        self.translation["Smudge Length"]["tr"] = "번짐 길이"
+        self.translation["Smudge Mode"]["tr"]   = "색상 번짐 모드"
 
         self.translation["Size"]["abr"]          = "크기"
         self.translation["Opacity"]["abr"]       = "불투명"
@@ -170,3 +186,5 @@ class CBT_Translation():
         self.translation["Overlay Mode"]["abr"]  = "오버레"
         self.translation["Ink depletion"]["abr"] = "잉크"
         self.translation["Painting Mode"]["abr"] = "그리기" 
+        self.translation["Smudge Length"]["tr"]  = "번짐길"
+        self.translation["Smudge Mode"]["tr"]    = "번짐모" 

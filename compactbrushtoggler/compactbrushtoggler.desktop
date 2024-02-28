@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Service
 ServiceTypes=Krita/PythonPlugin
-X-KDE-Library=compactbrushtoggler
+X-KDE-Library=CompactBrushToggler
 X-Python-2-Compatible=false
 X-Krita-Manual=Manual.html
 Name=Compact Brush Toggler

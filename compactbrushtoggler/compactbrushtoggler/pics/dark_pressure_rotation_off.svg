@@ -8,7 +8,7 @@
    version="1.1"
    id="svg5"
    inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
-   sodipodi:docname="dark_pressure_rotation.svg"
+   sodipodi:docname="dark_pressure_rotation_off.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -94,10 +94,9 @@
        id="rect1"
        width="1.3229166"
        height="2.6188121"
-       x="-3.216229"
-       y="2.7624648"
+       x="1.5875"
+       y="2.9390256"
        ry="0.66145831"
-       rx="0.66145831"
-       transform="rotate(-60)" />
+       rx="0.66145831" />
   </g>
 </svg>

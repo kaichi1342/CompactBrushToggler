@@ -1,1 +1,1 @@
-from .compactbrushtoggler import CompactBrushToggler
+from .CompactBrushToggler import CompactBrushToggler

@@ -86,14 +86,16 @@ class CompactBrushToggler(DockWidget):
         self.baseWidget.setLayout(self.vbox)
         self.setWidget(self.baseWidget)
         
+        self.createdActions = False
+        
         self.theme      = "dark"
         self.theme_signal  = False 
 
         self.toggler    = CBT_Toggler(self, self.theme_color) 
         self.toggler.setTheme(self.theme)
         
-        for br_prop in self.toggler.property:
-            if(br_prop != "Brush Tip") : self.toggler.toggleState[br_prop] = True; 
+        for prop in self.toggler.property.keys():
+            self.toggler.property[prop].value = True; 
     
         self.setUI_H() 
 
@@ -121,26 +123,26 @@ class CompactBrushToggler(DockWidget):
         self.toolGrid3.setAlignment(Qt.AlignRight)
         self.hRow3.setLayout(self.toolGrid3)
 
-
-        self.lbl_test            = QLabel()
         self.lbl_BrushFade       = QLabel("Softness")
         self.BrushFadeSlider     = QSlider(Qt.Horizontal)
         self.BrushFade           = CBTDoubleSpinBox()
- 
 
         self.lbl_Toggle       = QLabel("Toggles")
   
         self.vbox.addWidget(self.hRow1)    
-        self.vbox.addWidget(self.hRow2)   
-        self.vbox.addWidget(self.lbl_test)  
-
+        self.vbox.addWidget(self.hRow2)    
 
         self.BrushProperty       = { }
 
-        for prop in self.toggler.toggleState.keys(): 
+        i = 0 
+        for prop in self.toggler.property.keys(): 
             self.BrushProperty[prop] =  QPushButton() 
-            self.BrushProperty[prop].setToolTip("Toggle Brush " + self.toggler.brush_text["full"][prop])
-         
+            self.BrushProperty[prop].setToolTip("Toggle Brush " + self.toggler.translation[prop]["tr"] )
+            self.BrushProperty[prop].setSizePolicy( QSizePolicy.Preferred, QSizePolicy.Expanding )
+            self.toolGrid2.addWidget(self.BrushProperty[prop], i // 2, i % 2) 
+            i += 1
+    
+
         self.BrushFade.setRange(0, 1.0)
         self.BrushFade.setSingleStep(.01) 
 
@@ -152,39 +154,28 @@ class CompactBrushToggler(DockWidget):
         #self.toolGrid1.addWidget(self.lbl_BrushFade, 0, 0)
         self.toolGrid1.addWidget(self.BrushFadeSlider, 0, 0, 0, 5)
         self.toolGrid1.addWidget(self.BrushFade, 0, 6)
-      
-  
-        i = 0 
-        for prop in self.BrushProperty.keys():   
-            self.BrushProperty[prop].setSizePolicy( QSizePolicy.Preferred, QSizePolicy.Expanding )
-            self.toolGrid2.addWidget(self.BrushProperty[prop], i // 2, i % 2) 
-            i += 1
-      
-        self.brushPropertyConnect()
 
+
+        self.brushPropertyConnect()
+         
         self.BrushFadeSlider.valueChanged.connect(lambda:  self.sliderFadeChange()) 
         self.BrushFadeSlider.sliderReleased.connect(lambda:  self.changeFadeValue()) 
-        self.BrushFade.stepChanged.connect(lambda:  self.spinnerChangedFadeValue())  
-   
- 
+        self.BrushFade.stepChanged.connect(lambda:  self.spinnerChangedFadeValue()) 
+
         self.toggler.setInputItems(self.BrushProperty, self.BrushFade, self.BrushFadeSlider)
-         
-        for prop in self.toggler.toggleState.keys(): 
-            self.toggler.toggleIcon(prop, True)
- 
+
+        for prop in self.toggler.property.keys(): 
+            self.toggler.toggleIcon(prop)
+
         self.timer.timeout.connect(self.toggler.loadBrushInfo)
-        self.resize(self.sizeHint())  
-   
-    
+
     #----------------------------------------------------#
     # Events and Connection                              #
     #                                                    #
     #----------------------------------------------------#
         
-
     def resizeEvent(self, event):    
         self.setNames()
-
     
     def canvasChanged(self, canvas):    
         if canvas:       
@@ -196,7 +187,6 @@ class CompactBrushToggler(DockWidget):
                 
         else:
             self.timer.stop() 
-
 
     def brushPropertyConnect(self):
         self.BrushProperty["Size"].clicked.connect(lambda: self.toggler.toggleOptions("Size"))
@@ -225,7 +215,6 @@ class CompactBrushToggler(DockWidget):
             self.window.themeChanged.connect(self.Theme_Changed)  
             self.theme_signal = True
             
-         
 
     def Theme_Changed(self):
         theme = QApplication.palette().color(QPalette.Window).value()
@@ -239,9 +228,26 @@ class CompactBrushToggler(DockWidget):
             self.toggler.setTheme(self.theme)
             self.toggler.cbt_icons.setTheme("light") 
 
-        for prop in self.toggler.toggleState.keys():  
-            self.toggler.toggleIcon(prop, self.toggler.toggleState[prop])
+        for prop in self.toggler.property.keys(): 
+            self.toggler.toggleIcon(prop)
 
+    def createActions(self):
+        if not self.createdActions:
+            self.createdActions = True
+            window = instance.activeWindow()
+            window.createAction('toggle_pressure_size').triggered.connect(lambda: self.toggler.toggleOptions("Size"))
+            window.createAction('toggle_pressure_opacity').triggered.connect(lambda: self.toggler.toggleOptions("Opacity"))
+            window.createAction('toggle_pressure_flow').triggered.connect(lambda: self.toggler.toggleOptions("Flow"))
+            window.createAction('toggle_pressure_softness').triggered.connect(lambda: self.toggler.toggleOptions("Softness"))
+            window.createAction('toggle_pressure_rotation').triggered.connect(lambda: self.toggler.toggleOptions("Rotation")) 
+            window.createAction('toggle_pressure_scatter').triggered.connect(lambda: self.toggler.toggleOptions("Scatter"))
+ 
+            window.createAction('toggle_pressure_colrate').triggered.connect(lambda: self.toggler.toggleOptions("Color Rate"))
+            window.createAction('toggle_overlay').triggered.connect(lambda: self.toggler.toggleOptions("Overlay Mode"))
+
+            window.createAction('toggle_soak').triggered.connect(lambda: self.toggler.toggleOptions("Ink depletion"))
+            window.createAction('toggle_painting_mode').triggered.connect(lambda: self.toggler.toggleOptions("Painting Mode"))
+        
     #----------------------------------------------------#
     # Connect Functions                                  #
     #                                                    #
@@ -251,16 +257,16 @@ class CompactBrushToggler(DockWidget):
         ratio =  self.BrushProperty["Size"].width() / self.BrushProperty["Size"].height() 
        
         if ratio > 4:
-            for prop in self.toggler.toggleState.keys():    
+            for prop in self.toggler.property.keys():   
                 self.BrushProperty[prop].setText( self.toggler.translation[prop]["tr"]) 
         elif ratio > 2:
-            for prop in self.toggler.toggleState.keys():    
+            for prop in self.toggler.property.keys():   
                 self.BrushProperty[prop].setText( self.toggler.translation[prop]["abr"]) 
         else:  
-            for prop in self.toggler.toggleState.keys():    
+            for prop in self.toggler.property.keys():  
                 self.BrushProperty[prop].setText("")
         
-        for prop in self.toggler.toggleState.keys():   
+        for prop in self.toggler.property.keys():  
             ico_size = QSize(
                 int(self.BrushProperty[prop].height() - ( self.BrushProperty[prop].height() * .20)),
                 int(self.BrushProperty[prop].width() - ( self.BrushProperty[prop].width() * .20)),
@@ -269,21 +275,18 @@ class CompactBrushToggler(DockWidget):
             self.BrushProperty[prop].setIconSize( ico_size )
 
     def reloadPreset(self):
-        Krita.instance().action('reload_preset_action').trigger()
- 
-        self.toggler.loadState()
+        #Krita.instance().action('reload_preset_action').trigger() 
+        #self.toggler.loadState()
+        pass
         
             
-    def loadBrushState(self):  
-        
+    def loadBrushState(self):   
         self.toggler.loadState()
 
     #----------------------------------------------------#
     # Toggle And Change Function                         #
     #                                                    #
-    #----------------------------------------------------#
- 
-    
+    #----------------------------------------------------# 
     def sliderFadeChange(self):    
         self.BrushFade.setValue(self.BrushFadeSlider.value()/100)  
  

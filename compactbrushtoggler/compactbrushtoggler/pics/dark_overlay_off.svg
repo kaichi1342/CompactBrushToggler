@@ -7,7 +7,7 @@
    viewBox="0 0 5.8208332 5.8208332"
    version="1.1"
    id="svg5"
-   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
    sodipodi:docname="dark_overlay_off.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -26,18 +26,24 @@
      inkscape:document-units="px"
      showgrid="true"
      inkscape:zoom="26.910886"
-     inkscape:cx="1.8579842"
-     inkscape:cy="9.0669627"
+     inkscape:cx="1.876564"
+     inkscape:cy="9.0855426"
      inkscape:window-width="1920"
      inkscape:window-height="1017"
-     inkscape:window-x="936"
-     inkscape:window-y="1076"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
      showguides="true">
     <inkscape:grid
        type="xygrid"
-       id="grid9724" />
+       id="grid9724"
+       originx="0"
+       originy="0"
+       spacingy="1"
+       spacingx="1"
+       units="px"
+       visible="true" />
     <sodipodi:guide
        position="5.5652004,5.5566513"
        orientation="0,-1"
@@ -138,6 +144,13 @@
        id="path41149"
        style="mix-blend-mode:normal;fill:url(#radialGradient41151);fill-opacity:1;stroke:none;stroke-width:0.529165;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;filter:url(#filter47031)"
        d="m -15.23101,-10.1579 a 6.0563381,6.0486175 0 0 0 -6.05634,6.04862 6.0563381,6.0486175 0 0 0 6.05634,6.04862 6.0563381,6.0486175 0 0 0 0.008,-5.2e-4 v 5.2e-4 h 14.33752 a 6.0563381,6.0486175 0 0 0 6.05634,-6.04862 6.0563381,6.0486175 0 0 0 -6.05634,-6.04862 h -14.33763 a 6.0563381,6.0486175 0 0 0 -0.008,0 z"
-       transform="matrix(0.16168981,0,0,0.16168981,4.2133535,3.5748454)" />
+       transform="matrix(0.16168981,0,0,0.16168981,4.2133548,2.3593653)" />
+    <rect
+       style="fill:#373737;fill-opacity:1;stroke:none;stroke-width:0.342244;stroke-linecap:square;stroke-linejoin:round;stroke-opacity:1"
+       id="rect44484"
+       width="4.2780428"
+       height="0.85560858"
+       x="0.77077341"
+       y="3.1750517" />
   </g>
 </svg>
