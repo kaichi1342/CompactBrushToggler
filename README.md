@@ -138,14 +138,14 @@ if not enable it by going to Settings -> Configure Krita -> **Python Plugin Mana
 ### Release Log
 
 2024-02-28 : Version 0.1.6 
-    Added new icons
-    Added shortcuts
+- Added new icons
+- Added shortcuts
 
 2024-02-10 : Version 1.0.0
-    Rewritte to use Preset Class
-    Added Smudge Length and Mode
-    Added new icons
-    Added shortcuts
+- Rewritte to use Preset Class
+- Added Smudge Length and Mode
+- Added new icons
+- Added shortcuts
 
 2024-01-13 : Version 0.1.5
 - Fix Enabling/Disabling Bug
