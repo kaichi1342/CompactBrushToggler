@@ -24,14 +24,14 @@ Interface Adjust Depending on the ratio of height and width of the button
 | Icon On | Icon Off | Abbreviation | Description | 
 | ------- | -------- | ------------ | ----------- |
 |         |          | Fade         | Brush Fade Slider |
-| ![Interface](./screenshots/icons/ico-size.png)    | ![Interface](./screenshots/icons/ico-pr-off.png)  | Sze       | Size Pen Pressure Toggle |
-| ![Interface](./screenshots/icons/ico-opc.png)     | ![Interface](./screenshots/icons/ico-pr-off.png)  | Opc       | Opacity Pen Pressure Toggle |
-| ![Interface](./screenshots/icons/ico-flw.png)     | ![Interface](./screenshots/icons/ico-pr-off.png)  | Flw       | Flow Pen Pressure Toggle |
-| ![Interface](./screenshots/icons/ico-sft.png)     | ![Interface](./screenshots/icons/ico-pr-off.png)  | Sft       | Softness Pen Pressure Toggle |
-| ![Interface](./screenshots/icons/ico-rot.png)     | ![Interface](./screenshots/icons/ico-pr-off.png)  | Rot       | Rotation Pen Pressure Toggle|
-| ![Interface](./screenshots/icons/ico-sct.png)     | ![Interface](./screenshots/icons/ico-pr-off.png)  | Sca       | Scatter Pen Pressure Toggle |
-| ![Interface](./screenshots/icons/ico-col.png)     | ![Interface](./screenshots/icons/ico-pr-off.png)  | Col       | Color Rate   |
-| ![Interface](./screenshots/icons/ico-ovl.png)     | ![Interface](./screenshots/icons/ico-ovl-off.png) | Ovl       | Overlay Mode - Smudge Brush Engine Only|
+| ![Interface](./screenshots/icons/ico-size-on.png)    | ![Interface](./screenshots/icons/ico-size-off.png)  | Sze       | Size Pen Pressure Toggle |
+| ![Interface](./screenshots/icons/ico-opc-on.png)     | ![Interface](./screenshots/icons/ico-opc-off.png)  | Opc       | Opacity Pen Pressure Toggle |
+| ![Interface](./screenshots/icons/ico-flw-on.png)     | ![Interface](./screenshots/icons/ico-flw-off.png)  | Flw       | Flow Pen Pressure Toggle |
+| ![Interface](./screenshots/icons/ico-sft-on.png)     | ![Interface](./screenshots/icons/ico-sft-off.png)  | Sft       | Softness Pen Pressure Toggle |
+| ![Interface](./screenshots/icons/ico-rot-on.png)     | ![Interface](./screenshots/icons/ico-rot-off.png)  | Rot       | Rotation Pen Pressure Toggle|
+| ![Interface](./screenshots/icons/ico-sct-on.png)     | ![Interface](./screenshots/icons/ico-sct-off.png)  | Sca       | Scatter Pen Pressure Toggle |
+| ![Interface](./screenshots/icons/ico-col-on.png)     | ![Interface](./screenshots/icons/ico-col-off.png)  | Col       | Color Rate   |
+| ![Interface](./screenshots/icons/ico-ovl-on.png)     | ![Interface](./screenshots/icons/ico-ovl-off.png) | Ovl       | Overlay Mode - Smudge Brush Engine Only|
 | ![Interface](./screenshots/icons/ico-sok-on.png)  | ![Interface](./screenshots/icons/ico-sok-off.png) | Sok       | Soak Ink - Bristle Engine Only|
 | ![Interface](./screenshots/icons/ico-ptm-wash.png)| ![Interface](./screenshots/icons/ico-ptm-bld.png) | PtM       | Painting Mode : On -> Wash , Off -> Build |
  
@@ -39,8 +39,8 @@ The plugin loads the state of the pressure settings once a brush is selected;
 -- if its highlighted blue then the pressure setting is active
 -- if its not highlighted the pressure setting is inactive. 
 
-*Control Toggles*
-![Use Pressure Curve Toggles](./screenshots/ui-brushtoggler.jpeg)
+*Control Toggles and Fade Slider*
+![Use Pressure Curve Toggles](./screenshots/ui-brushtoggler1.jpeg)
 
 *Paint Mode*
 ![Overlay Mode](./screenshots/ui-brushtoggler4.jpeg)
@@ -51,10 +51,7 @@ The plugin loads the state of the pressure settings once a brush is selected;
 *Soak Ink for Bristle Brush*
 ![Overlay Mode](./screenshots/ui-brushtoggler3.jpeg)
 
-
-*Brush Fade Slider* 
-![Brush Fade Slider](./screenshots/ui-brushfade.jpeg)
-
+ 
 
 ### Functionalities
 
@@ -140,7 +137,7 @@ if not enable it by going to Settings -> Configure Krita -> **Python Plugin Mana
 
 ### Release Log
 
-2024-02-28 : Version 1.0.0 
+2024-02-28 : Version 0.1.6 
     Added new icons
     Added shortcuts
 
