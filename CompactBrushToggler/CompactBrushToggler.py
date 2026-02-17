@@ -75,8 +75,6 @@ class CompactBrushToggler(DockWidget):
         "light" : {"on" :  "background-color : #8BD5F0; color : #9A9A9A;", "off" : "background-color : #D2D2D2 ; color : #373737;", "disabled" : "background-color : #9A9A9A; color : #2a2a2a;"}
     } 
       
-    
-
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Compact Brush Toggler") 
@@ -99,8 +97,6 @@ class CompactBrushToggler(DockWidget):
         self.setUI_H() 
 
     def setUI_H(self):
- 
-        
         self.timer = QTimer() 
         self.BrushFade           = CBTDoubleSpinBox() 
         self.BrushFade.setRange(0, 1.0)
@@ -118,7 +114,6 @@ class CompactBrushToggler(DockWidget):
             i += 1
    
         self.brushPropertyConnect()
-        
         
         self.BrushFadeSlider = self.findChild(QSlider, "BrushFadeSlider")
         self.BrushFadeSlider.valueChanged.connect(lambda:  self.sliderFadeChange()) 
