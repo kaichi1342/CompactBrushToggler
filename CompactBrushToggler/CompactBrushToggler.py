@@ -28,15 +28,15 @@
 import krita 
 import time, os
  
-from PyQt5 import  uic
+from PyQt6 import  uic
 
-from PyQt5.QtCore import (
+from PyQt6.QtCore import (
     QSize, QTimer, Qt, pyqtSignal
 )
-from PyQt5.QtGui import (
+from PyQt6.QtGui import (
     QPalette
 )
-from PyQt5.QtWidgets import (
+from PyQt6.QtWidgets import (
     QApplication,
     QWidget, QLabel, QSlider,
     QVBoxLayout,  QHBoxLayout,  QGridLayout,  
@@ -48,9 +48,7 @@ from PyQt5.QtWidgets import (
 from .CBT_Icons import * 
 from .CBT_Toggler import * 
 
-
-DOCKER_NAME = 'CompactBrushToggler'
-DOCKER_ID = 'pykrita_compactbrushtoggler'
+#DOCKER_NAME = 'CompactBrushToggler' 
 
 instance = Krita.instance()
    
@@ -75,12 +73,18 @@ class CompactBrushToggler(DockWidget):
         "light" : {"on" :  "background-color : #8BD5F0; color : #9A9A9A;", "off" : "background-color : #D2D2D2 ; color : #373737;", "disabled" : "background-color : #9A9A9A; color : #2a2a2a;"}
     } 
       
+    
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Compact Brush Toggler") 
+        #self.setWindowTitle("Compact Brush Toggler") 
+        #self.setWindowFlags(QtCore.Qt.WindowType.BypassWindowManagerHint)
+        #self.setWindowFlags(QtCore.Qt.WindowType.CustomizeWindowHint)
+    
+
         instance.notifier().windowCreated.connect(self.createActions)
 
         self.baseWidget =  uic.loadUi(os.path.dirname(os.path.realpath(__file__)) + '/CBT_UI.ui')
+
         self.setWidget(self.baseWidget) 
 
         self.createdActions = False
@@ -97,6 +101,8 @@ class CompactBrushToggler(DockWidget):
         self.setUI_H() 
 
     def setUI_H(self):
+ 
+        
         self.timer = QTimer() 
         self.BrushFade           = CBTDoubleSpinBox() 
         self.BrushFade.setRange(0, 1.0)
@@ -109,11 +115,12 @@ class CompactBrushToggler(DockWidget):
         for prop in self.toggler.property.keys(): 
             self.BrushProperty[prop] =  QPushButton() 
             self.BrushProperty[prop].setToolTip("Toggle Brush " + self.toggler.translation[prop]["tr"] )
-            self.BrushProperty[prop].setSizePolicy( QSizePolicy.Preferred, QSizePolicy.Expanding )
+            self.BrushProperty[prop].setSizePolicy( QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Expanding )
             self.baseWidget.toggleGrid.addWidget(self.BrushProperty[prop], i // 2, i % 2) 
             i += 1
    
         self.brushPropertyConnect()
+        
         
         self.BrushFadeSlider = self.findChild(QSlider, "BrushFadeSlider")
         self.BrushFadeSlider.valueChanged.connect(lambda:  self.sliderFadeChange()) 
@@ -182,7 +189,7 @@ class CompactBrushToggler(DockWidget):
 
       
     def Theme_Changed(self):
-        theme = QApplication.palette().color(QPalette.Window).value()
+        theme = QApplication.palette().color(QPalette.ColorRole.Window).value()
         
         if theme > 128: 
             self.theme  = "light"
@@ -264,9 +271,5 @@ class CompactBrushToggler(DockWidget):
         pass
 
 
-instance = Krita.instance()
-dock_widget_factory = DockWidgetFactory(DOCKER_ID,
-                                        DockWidgetFactoryBase.DockRight,
-                                        CompactBrushToggler)
 
-instance.addDockWidgetFactory(dock_widget_factory)
+ 

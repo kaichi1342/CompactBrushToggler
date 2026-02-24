@@ -28,9 +28,9 @@ import os, math, json
 import xml.etree.ElementTree as ET
 
 from krita import *
-from PyQt5.QtCore import (  QItemSelectionModel, QSize, QTimer, Qt, pyqtSignal, QLocale, qDebug, qWarning )
+from PyQt6.QtCore import (  QItemSelectionModel, QSize, QTimer, Qt, pyqtSignal, QLocale, qDebug, qWarning )
  
-from PyQt5.QtWidgets import (
+from PyQt6.QtWidgets import (
     QApplication, QCheckBox, QListView,
     QFrame,QWidget, QDoubleSpinBox,QMainWindow,
     QComboBox, QMessageBox, QRadioButton  

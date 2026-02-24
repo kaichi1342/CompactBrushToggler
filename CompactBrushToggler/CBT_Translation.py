@@ -26,7 +26,7 @@
 
  
 
-from PyQt5.QtCore import (  QLocale )
+from PyQt6.QtCore import (  QLocale )
 
 
 class CBT_Translation():
