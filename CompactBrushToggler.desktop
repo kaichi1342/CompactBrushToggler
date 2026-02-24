@@ -5,4 +5,4 @@ X-KDE-Library=CompactBrushToggler
 X-Python-2-Compatible=false
 X-Krita-Manual=Manual.html
 Name=Compact Brush Toggler
-Comment=This is docker that provides toggle button for 10 different brush properties and a slider for brush fade.
+Comment=This is docker that provides toggle button for 12 different brush properties and a slider for brush fade.
