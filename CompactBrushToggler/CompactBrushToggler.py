@@ -76,9 +76,8 @@ class CompactBrushToggler(DockWidget):
     
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Compact Brush Toggler")  
-    
-
+        self.setWindowTitle("Compact Brush Toggler") 
+        
         instance.notifier().windowCreated.connect(self.createActions)
 
         self.baseWidget =  uic.loadUi(os.path.dirname(os.path.realpath(__file__)) + '/CBT_UI.ui')
