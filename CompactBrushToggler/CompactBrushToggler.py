@@ -76,9 +76,7 @@ class CompactBrushToggler(DockWidget):
     
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Compact Brush Toggler") 
-        #self.setWindowFlags(QtCore.Qt.WindowType.BypassWindowManagerHint)
-        #self.setWindowFlags(QtCore.Qt.WindowType.CustomizeWindowHint)
+        self.setWindowTitle("Compact Brush Toggler")  
     
 
         instance.notifier().windowCreated.connect(self.createActions)

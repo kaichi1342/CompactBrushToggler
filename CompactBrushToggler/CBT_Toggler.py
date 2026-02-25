@@ -237,7 +237,7 @@ class CBT_Toggler():
 
         presetXMLString = preset.toXML()
         presetTree = ET.fromstring(presetXMLString)
-         
+        
         for param in presetTree.findall('param'): 
             name = param.get('name')
              
@@ -298,17 +298,31 @@ class CBT_Toggler():
         presetTree = ET.fromstring(presetXMLString)
         
         brush_property = self.property[prop] 
-  
+        
+        is_enabled_hairy = "true"
+        
+
         for param in presetTree.findall('param'):   
             if param.get('name') == brush_property.name : 
                 param.text = new_value 
 
                 if brush_property.sub_name == "": continue
                  
-                for sub_param in presetTree.findall('param'): 
+                for sub_param in presetTree.findall('param'):
+                    if brush_property.sub_name == "HairyInk/soak" and sub_param.get('name') == "HairyInk/enabled":
+                        is_enabled_hairy = sub_param.text 
+
                     if sub_param.get('name') ==  brush_property.sub_name:
                         sub_param.text = new_value
-            
+        
+
+        QtCore.qDebug("soak value" + new_value + " -->  " + is_enabled_hairy ) 
+        if brush_property.sub_name == "HairyInk/soak" and new_value == "false":
+            for sub_param in presetTree.findall('param'):
+                if sub_param.get('name') == "HairyInk/enabled":
+                    sub_param.text = new_value = "true"
+
+
         
         presetXMLString = ET.tostring(presetTree, encoding="unicode")
         preset.fromXML(presetXMLString)

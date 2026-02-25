@@ -138,6 +138,8 @@ V. 0.0.1 to V. 1.0.4
 - Krita 5 beta 5
 
 ### Release Log
+2026-02-25 : Version 0.1.6   
+- QT6 Port
 
 2024-02-28 : Version 0.1.6   
 - Added new icons 
