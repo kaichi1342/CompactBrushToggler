@@ -48,7 +48,7 @@ from PyQt6.QtWidgets import (
 from .CBT_Icons import * 
 from .CBT_Toggler import * 
 
-#DOCKER_NAME = 'CompactBrushToggler' 
+DOCKER_NAME = 'CompactBrushToggler' 
 
 instance = Krita.instance()
    
@@ -76,7 +76,7 @@ class CompactBrushToggler(DockWidget):
     
     def __init__(self):
         super().__init__()
-        #self.setWindowTitle("Compact Brush Toggler") 
+        self.setWindowTitle("Compact Brush Toggler") 
         #self.setWindowFlags(QtCore.Qt.WindowType.BypassWindowManagerHint)
         #self.setWindowFlags(QtCore.Qt.WindowType.CustomizeWindowHint)
     
