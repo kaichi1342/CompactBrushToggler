@@ -37,6 +37,7 @@ from PyQt5.QtWidgets import (
 )
  
 import xml.etree.ElementTree as ET
+import re
 
 from .CBT_Icons import * 
 from .CBT_Translation import * 
@@ -236,8 +237,17 @@ class CBT_Toggler():
         preset = Preset(view.currentBrushPreset())
 
         presetXMLString = preset.toXML()
-        presetTree = ET.fromstring(presetXMLString)
+        
+        patternMd5 = re.search(r'<param (?:type="string" )?name="Texture/Pattern/PatternMD5"(?: type="string")?><!\[CDATA\[(.+?)\]\]></param>', presetXMLString)
+        if patternMd5 and re.search("[^a-zA-Z0-9+/=]", patternMd5.group(1)):
+            presetXMLString = re.sub(re.escape(patternMd5.group(0)), "", presetXMLString)
+        
          
+        preset.fromXML(presetXMLString)
+ 
+
+        presetTree = ET.fromstring(presetXMLString)
+
         for param in presetTree.findall('param'): 
             name = param.get('name')
              
@@ -295,6 +305,12 @@ class CBT_Toggler():
         preset = Preset(view.currentBrushPreset())
 
         presetXMLString = preset.toXML()
+
+        patternMd5 = re.search(r'<param (?:type="string" )?name="Texture/Pattern/PatternMD5"(?: type="string")?><!\[CDATA\[(.+?)\]\]></param>', presetXMLString)
+        if patternMd5 and re.search("[^a-zA-Z0-9+/=]", patternMd5.group(1)):
+            presetXMLString = re.sub(re.escape(patternMd5.group(0)), "", presetXMLString)
+        
+         
         presetTree = ET.fromstring(presetXMLString)
         
         brush_property = self.property[prop] 
@@ -323,6 +339,11 @@ class CBT_Toggler():
         preset = Preset(view.currentBrushPreset())
 
         presetXMLString = preset.toXML()
+        
+        patternMd5 = re.search(r'<param (?:type="string" )?name="Texture/Pattern/PatternMD5"(?: type="string")?><!\[CDATA\[(.+?)\]\]></param>', presetXMLString)
+        if patternMd5 and re.search("[^a-zA-Z0-9+/=]", patternMd5.group(1)):
+            presetXMLString = re.sub(re.escape(patternMd5.group(0)), "", presetXMLString)
+        
         presetTree = ET.fromstring(presetXMLString)
            
         for param in presetTree.findall('param'):   

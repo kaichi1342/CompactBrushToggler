@@ -126,6 +126,9 @@ if not enable it by going to Settings -> Configure Krita -> **Python Plugin Mana
 
 
 ### Tested Platforms
+V. 1.0.0b
+- Krita 6 
+
 V. 1.0.0
 - Krita 5.2 
 
