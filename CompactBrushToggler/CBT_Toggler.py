@@ -236,8 +236,13 @@ class CBT_Toggler():
         preset = Preset(view.currentBrushPreset())
 
         presetXMLString = preset.toXML()
+        
+        patternMd5 = re.search(r'<param (?:type="string" )?name="Texture/Pattern/PatternMD5"(?: type="string")?><!\[CDATA\[(.+?)\]\]></param>', presetXMLString)
+        if patternMd5 and re.search("[^a-zA-Z0-9+/=]", patternMd5.group(1)):
+            presetXMLString = re.sub(re.escape(patternMd5.group(0)), "", presetXMLString)
+        
         presetTree = ET.fromstring(presetXMLString)
-         
+
         for param in presetTree.findall('param'): 
             name = param.get('name')
              
