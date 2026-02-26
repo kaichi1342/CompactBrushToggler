@@ -130,14 +130,20 @@ V. 1.0.0b
 - Krita 6 
 
 V. 1.0.0
-- Krita 5.2 
+- Krita 5.2
 
-V. 0.0.1 to V. 1.0.4 
+
+V. 0.0.1 to V. 0.1.4 
 - Krita 5.1
 - Krita 5.1.0 Pre-alpha
 - Krita 5 beta 5
 
 ### Release Log
+2026-02-26 : Version 1.0.0
+- Fixed Preset Tree issue
+
+2026-02-25 : Version 1.0.0b
+- QT6 Port
 
 2024-02-28 : Version 0.1.6   
 - Added new icons 
@@ -206,3 +212,4 @@ along with this program. If not, see https://www.gnu.org/licenses/
 
                             
  
+
