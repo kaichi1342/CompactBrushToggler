@@ -1,5 +1,10 @@
 # Compact Brush Toggler
 
+A plugin for [Krita](https://krita.org).
+
+
+## What is Compact Brush Toggler? 
+
 *Compact Brush Toggler* is a Python plugin made for [Krita](https://krita.org) (free professional and open-source painting program). 
 
 This plugin allows one access to "Use Pressure Curve" checkboxes, that toggles pressure on/off specific brush property and "Horizontal Brush Fade" Slider , that controls the horizontal fade/blur of the brush, from a smaller docker without opening the Brush Editor. 
