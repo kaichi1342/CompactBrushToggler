@@ -115,11 +115,10 @@ You would need to switch to a different brush and back for it to properly reflec
 For Krita 6.0.x
 - **[ZIP](https://github.com/kaichi1342/CompactBrushToggler/archive/refs/heads/v.1.0.0b.zip)**
 
-
-For Krita 5.2.x
+For Krita 5.2.x (Last Version Maintained for 5.2.x)
 - **[ZIP](https://github.com/kaichi1342/CompactBrushToggler/archive/refs/heads/v.1.0.0.zip)**
 
-For Krita 5.1.x
+For Krita 5.1.x (Last Version Maintained for 5.1.x)
 - **[ZIP](https://github.com/kaichi1342/CompactBrushToggler/archive/refs/heads/v.0.1.6b.zip)**
 
 ### Install
