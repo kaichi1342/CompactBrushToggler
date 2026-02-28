@@ -110,8 +110,17 @@ You would need to switch to a different brush and back for it to properly reflec
 ## Downloads - Install - Execute 
 
 ### Download
-- **[ZIP](https://github.com/kaichi1342/CompactBrushToggler/archive/refs/heads/v.1.0.0.zip)**
 - **[Source](https://github.com/kaichi1342/CompactBrushToggler)**
+
+For Krita 6.0.x
+- **[V.1.0.0b - ZIP](https://github.com/kaichi1342/CompactBrushToggler/archive/refs/heads/v.1.0.0b.zip)**
+
+
+For Krita 5.2.x (Last Version Maintained for 5.2.x)
+- **[V.1.0.0 - ZIP](https://github.com/kaichi1342/CompactBrushToggler/archive/refs/heads/v.1.0.0.zip)**
+
+For Krita 5.1.x (Last Version Maintained for 5.1.x)
+- **[V.0.1.6 - ZIP](https://github.com/kaichi1342/CompactBrushToggler/archive/refs/heads/v.0.1.6b.zip)**
 
 ### Install
 
@@ -127,17 +136,22 @@ if not enable it by going to Settings -> Configure Krita -> **Python Plugin Mana
 
 ### Tested Platforms
 V. 1.0.0b
-- Krita 6 
+- Krita 6.0 
 
 V. 1.0.0
-- Krita 5.2 
+- Krita 5.2.x 
 
-V. 0.0.1 to V. 1.0.4 
+V. 0.0.1 to V. 0.1.6
 - Krita 5.1
 - Krita 5.1.0 Pre-alpha
 - Krita 5 beta 5
 
 ### Release Log
+2026-02-26 : Version 1.0.0   
+- Fix Preset Tree Issue for Krita 5.2.x
+
+2026-02-25 : Version 1.0.0   
+- QT6 Port
 
 2024-02-28 : Version 0.1.6   
 - Added new icons 
